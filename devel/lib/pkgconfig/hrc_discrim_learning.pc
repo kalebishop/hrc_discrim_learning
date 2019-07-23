@@ -1,0 +1,8 @@
+prefix=/ros/catkin_ws/src/hrc_discrim_learning/devel
+
+Name: hrc_discrim_learning
+Description: Description of hrc_discrim_learning
+Version: 0.0.0
+Cflags: 
+Libs: -L/ros/catkin_ws/src/hrc_discrim_learning/devel/lib 
+Requires: 

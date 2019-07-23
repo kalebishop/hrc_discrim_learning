@@ -1,0 +1,23 @@
+<launch>
+  <!-- ARUCO ROS -->
+  <arg name="markerSize"  default="0.03"/>
+  <arg name="ref_frame"   default="base_link"/>
+
+  <include file="$(find hrc_discrim_learning)/launch/display.launch"/>
+
+  <node name="image_view_AR" pkg="image_view" type="image_view" respawn="false" output="log">
+    <remap from="image" to="/my_aruco/result"/>
+    <param name="autosize" value="true" />
+  </node>
+
+  <param name="my_aruco/image_is_rectified"   value="True"/>
+  <param name="my_aruco/marker_size"          value="$(arg markerSize)"/>
+  <param name="my_aruco/reference_frame"      value="$(arg ref_frame)"/>
+  <param name="my_aruco/camera_frame"         value="base_link"/>
+
+  <node pkg="aruco_ros" type="marker_publisher" name="my_aruco" respawn="true">
+    <remap from="image" to="/usb_cam/image_raw"/>
+    <remap from="camera_info" to="/usb_cam/camera_info"/>
+  </node>
+
+</launch>
