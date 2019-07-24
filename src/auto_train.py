@@ -14,6 +14,7 @@ class ScriptedTrainer:
         self.NEW_ENV    = 2
         self.CONTINUE   = 1
         self.STOP_TRAIN = 0
+        self.ERROR      = -1
 
         self.run        = True
 
