@@ -10,7 +10,7 @@ class SimpleListener:
         self.object_type        = ['marker', 'pen', 'pencil', 'tablet', 'cup', 'bottle', 'notepad', 'computer', 'table'] # 3
 
         #  relative
-        self.location_relative  = ['left', 'right', 'close', 'far'] # 4
+        self.location_relative  = ['left', 'right', 'close', 'far', 'front', 'back'] # 4
         self.length_relative    = ['long', 'short'] # 5
         self.size_relative      = ['big', 'bigger', 'small', 'smaller', 'large', 'larger'] # 6
 

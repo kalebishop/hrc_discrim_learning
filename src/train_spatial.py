@@ -32,32 +32,32 @@ class TrainSpatialData:
             input = self.receive_train_input()
             if input == self.ERROR:
                 break
-            elif input == self.STOP_TRAIN:
+            elif input.control == self.STOP_TRAIN:
                 self.end_train_input()
                 break
-            elif input == self.NEW_ENV:
+            elif input.control == self.NEW_ENV:
                 self.context = self.init_new_environment()
                 self.corpus_dict[self.context] = []
 
-            # successfully got new input tuple to train
-            obj_id, obj_utt = input
+            else:
+                obj_id = input.id
+                obj_utt = input.utterance
 
-            # match id to obj in env
-            print("object id = ", obj_id)
-            print("context ids = ", [x.features['id'] for x in self.context.env])
+                # match id to obj in env
+                print("object id = ", obj_id)
+                print("context ids = ", [x.features['id'] for x in self.context.env])
 
-            ref_obj = None
-            for obj in self.context.env:
-                if obj.get_feature_class_value('id') == obj_id:
-                    ref_obj = obj
+                ref_obj = None
+                for obj in self.context.env:
+                    if obj.get_feature_class_value('id') == obj_id:
+                        ref_obj = obj
 
-            processed_utt = self.listener.get_named_features_as_tuples(obj_utt)
+                processed_utt = self.listener.get_named_features_as_tuples(obj_utt)
 
-            self.corpus_dict[self.context].append((ref_obj, processed_utt))
-            print(self.corpus_dict)
+                self.corpus_dict[self.context].append((ref_obj, processed_utt))
+                print(self.corpus_dict)
 
     def init_new_environment(self):
-        # TODO: receive message from system abt whether to init a new env
         objs = env_perception.bootstrap_env_info()
         context = AdaptiveContext(objs)
         self.corpus_dict[context] = []
@@ -76,11 +76,7 @@ class TrainSpatialData:
         try:
             input_provider = rospy.ServiceProxy('train_input_provider', TrainInput)
             resp = input_provider(1)
-
-            if resp.control == self.STOP_TRAIN:
-                return self.STOP_TRAIN
-            else:
-                return resp.id, resp.utterance
+            return resp
 
         except rospy.ServiceException:
             print("Service call failed: %s")

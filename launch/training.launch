@@ -19,7 +19,6 @@
     <node pkg="hrc_discrim_learning" type="auto_train.py" name="scripted_training" respawn="false"/>
   </group>
 
-  <param name="/hrc_discrim_learning/train_new_env" value="false"/>
   <!-- learner node -->
   <node pkg="hrc_discrim_learning" type="train_spatial.py" name="train_spatial" respawn="false" output="screen"/>
 

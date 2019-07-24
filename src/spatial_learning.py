@@ -121,19 +121,31 @@ class ImageLocationLearner(LocationInfoLearner):
     """
     def __init__(self):
         super().__init__()
-        self.direction_vocab = {"right": (1, 0), "left": (-1, 0), "front": (0, -1), "back": (0, 1)}
+        self.direction_vocab = {"right": (1, 0), "left": (-1, 0), "front": (0, 1), "back": (0, -1)}
         self.location_vocab = {"center": (0, 0, 0)}
 
     def preprocess(self, corpus_data):
         X = []
         Y = []
 
+
         for context in corpus_data:
+            # for debugging
+            print("Calculated centroid:", context.workspace_centroid)
+            print()
+            # # # # #
             for obj, utt in corpus_data[context]:
                 for cls, data in utt:
                     if cls == 'workspace_location':
                         xi, yi, zi = obj.get_feature_class_value("location")
                         obj_vector = (xi, yi)
+
+                        # for debugging
+                        id = obj.get_feature_class_value('id')
+                        print()
+                        print('named:', data)
+                        print("obj", id, "loc", xi, yi, zi, "vec", obj_vector)
+                        # # # # #
 
                         X.append(obj_vector)
                         Y.append(data) # term
