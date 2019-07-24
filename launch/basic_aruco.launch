@@ -6,7 +6,7 @@
   <include file="$(find hrc_discrim_learning)/launch/display.launch"/>
 
   <node name="image_view_AR" pkg="image_view" type="image_view" respawn="false" output="log">
-    <remap from="image" to="/my_aruco/result"/>
+    <remap from="image" to="/aruco_pub/result"/>
     <param name="autosize" value="true" />
   </node>
 
@@ -15,7 +15,7 @@
   <param name="my_aruco/reference_frame"      value="$(arg ref_frame)"/>
   <param name="my_aruco/camera_frame"         value="base_link"/>
 
-  <node pkg="aruco_ros" type="marker_publisher" name="my_aruco" respawn="true">
+  <node pkg="aruco_ros" type="marker_publisher" name="aruco_pub" respawn="true">
     <remap from="image" to="/usb_cam/image_raw"/>
     <remap from="camera_info" to="/usb_cam/camera_info"/>
   </node>

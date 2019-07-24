@@ -1,0 +1,26 @@
+<launch>
+  <!-- ARUCO_ROS stuff -->
+  <include file="$(find hrc_discrim_learning)/launch/basic_aruco.launch"/>
+
+  <arg name="use_auto_train" default="true"/>
+
+  <rosparam param="/perception/objs">
+    '0': {'color': 'yellow', 'material': 'paper', 'type': 'notepad', 'size_relative': 'small'}
+    '1': {'color': 'pink', 'material': 'paper', 'type': 'notepad', 'size_relative': 'small'}
+    '2': {'color': 'black', 'material': 'plastic', 'type': 'tablet', 'size_relative': 'large'}
+    '3': {'color': 'black', 'material': 'glass', 'type': 'tablet', 'size_relative': 'small'}
+    '4': {'color': 'black', 'material': 'plastic', 'type': 'pen', 'size_relative': 'small'}
+    '5': {'color': 'pink', 'material': 'plastic', 'type': 'pen', 'size_relative': 'small'}
+    '6': {'color': 'blue', 'material': 'plastic', 'type': 'pen', 'size_relative': 'small'}
+    '7': {'color': 'green', 'material': 'plastic', 'type': 'pen', 'size_relative': 'small'}
+  </rosparam>
+
+  <group if="$(arg use_auto_train)">
+    <node pkg="hrc_discrim_learning" type="auto_train.py" name="scripted_training" respawn="false"/>
+  </group>
+
+  <param name="/hrc_discrim_learning/train_new_env" value="false"/>
+  <!-- learner node -->
+  <node pkg="hrc_discrim_learning" type="train_spatial.py" name="train_spatial" respawn="false" output="screen"/>
+
+</launch>

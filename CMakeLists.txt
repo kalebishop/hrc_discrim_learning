@@ -51,8 +51,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate messages in the 'msg' folder
  add_message_files(
    FILES
-   ObjPercept.msg
-   ObjArray.msg
+   TrainInput.msg
  )
 
 ## Generate services in the 'srv' folder

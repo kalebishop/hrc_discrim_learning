@@ -2,14 +2,14 @@
   <include file="$(find hrc_discrim_learning)/launch/basic_aruco.launch"/>
 
   <rosparam param="/perception/objs">
-    "blue-marker" : 0
-    "red-marker"  : 1
-    "green-marker": 2
-    "pen"         : 3
-    "screwdriver" : 4
-    "mug"         : 5
-    "block"       : 6
-    "yellow-ball" : 7
+    0: {'color': 'yellow', 'material': 'paper', 'type': 'notepad', 'size_relative': 'small'}
+    1: {'color': 'pink', 'material': 'paper', 'type': 'notepad', 'size_relative': 'small'}
+    2: {'color': 'black', 'material': 'plastic', 'type': 'tablet', 'size_relative': 'large'}
+    3: {'color': 'black', 'material': 'glass', 'type': 'tablet', 'size_relative': 'small'}
+    4: {'color': 'black', 'material': 'plastic', 'type': 'pen', 'size_relative': 'small'}
+    5: {'color': 'pink', 'material': 'plastic', 'type': 'pen', 'size_relative': 'small'}
+    6: {'color': 'blue', 'material': 'plastic', 'type': 'pen', 'size_relative': 'small'}
+    7: {'color': 'green', 'material': 'plastic', 'type': 'pen', 'size_relative': 'small'}
   </rosparam>
 
   <node name="env_perception" pkg="hrc_discrim_learning" type="env_perception.py" respawn="false" output="screen">
