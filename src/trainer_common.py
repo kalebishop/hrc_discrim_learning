@@ -1,14 +1,12 @@
 #!/usr/bin/env python
-from base import Object, AdaptiveContext
+from base import AdaptiveContext
 from simple_listener import SimpleListener
-from spatial_learning import ImageLocationLearner, ObjectLocationLearner
 from hrc_discrim_learning.srv import TrainInput
 import env_perception
 import rospy
-import threading
 
-class TrainSpatialData:
-    def __init__(self):
+class TrainHarness:
+    def __init__(self, name, srv_name, learners):
         # control msg mappings
         self.NEW_ENV    = 2
         self.CONTINUE   = 1
@@ -16,16 +14,27 @@ class TrainSpatialData:
         self.ERROR      = -1
 
         self.listener = SimpleListener()
-        self.img_loc_learner = ImageLocationLearner()
-        # self.obj_loc_learner = ObjectLocationLearner()
-
-        # self.mappings = rospy.get_param('/perception/objs')
+        self.srv      = srv_name
 
         self.corpus_dict = {}
-        rospy.init_node('train_spatial', anonymous=False)
+
+        rospy.init_node(name)
+
         self.context = self.init_new_environment()
+        self.all_learners = learners
 
         self.run_training()
+
+    def receive_train_input(self):
+        rospy.wait_for_service(self.srv)
+        try:
+            input_provider = rospy.ServiceProxy(self.srv, TrainInput)
+            resp = input_provider(1)
+            return resp
+
+        except rospy.ServiceException:
+            print("Service call failed: %s")
+            return self.ERROR
 
     def run_training(self):
         while not rospy.is_shutdown():
@@ -43,19 +52,17 @@ class TrainSpatialData:
                 obj_id = input.id
                 obj_utt = input.utterance
 
-                # match id to obj in env
-                print("object id = ", obj_id)
-                print("context ids = ", [x.features['id'] for x in self.context.env])
-
                 ref_obj = None
                 for obj in self.context.env:
                     if obj.get_feature_class_value('id') == obj_id:
                         ref_obj = obj
 
+                if not ref_obj:
+                    continue
+
                 processed_utt = self.listener.get_named_features_as_tuples(obj_utt)
 
                 self.corpus_dict[self.context].append((ref_obj, processed_utt))
-                print(self.corpus_dict)
 
     def init_new_environment(self):
         objs = env_perception.bootstrap_env_info()
@@ -63,24 +70,18 @@ class TrainSpatialData:
         self.corpus_dict[context] = []
         return context
 
+    def train_all_learners(self):
+        # import pdb; pdb.set_trace()
+        for learner in self.all_learners:
+            X, Y = learner.preprocess(self.corpus_dict)
+            learner.train(X, Y)
+            learner.print_function()
+
     def end_train_input(self):
-        print("Finishing train data collection")
-        # rospy.loginfo("Finished collection of training data")
-        X, Y = self.img_loc_learner.preprocess(self.corpus_dict)
-        self.img_loc_learner.train(X, Y)
-        self.img_loc_learner.print_function()
-        # self.obj_loc_learner.train(self.corpus_dict)
+        print("Finished train data collection")
 
-    def receive_train_input(self):
-        rospy.wait_for_service('train_input_provider')
-        try:
-            input_provider = rospy.ServiceProxy('train_input_provider', TrainInput)
-            resp = input_provider(1)
-            return resp
+        for context in self.corpus_dict:
+            for obj, utt in self.corpus_dict[context]:
+                print('(Object(', obj.features, ')', utt, ')')
 
-        except rospy.ServiceException:
-            print("Service call failed: %s")
-            return self.ERROR
-
-if __name__ == '__main__':
-    trainer = TrainSpatialData()
+        self.train_all_learners()

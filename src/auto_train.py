@@ -43,7 +43,7 @@ class ScriptedTrainer:
 
     def run_train_server(self):
         rospy.init_node('scripted_training')
-        s = rospy.Service('train_input_provider', TrainInput, self.gen_input)
+        s = rospy.Service('train_spatial_input_provider', TrainInput, self.gen_input)
         while self.run:
             rospy.sleep(5)
 
