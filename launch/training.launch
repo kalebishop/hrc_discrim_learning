@@ -20,6 +20,6 @@
   </group>
 
   <!-- learner node -->
-  <node pkg="hrc_discrim_learning" type="train_spatial.py" name="train_spatial" respawn="false" output="screen"/>
+  <node pkg="hrc_discrim_learning" type="trainer_spatial.py" name="train_spatial" respawn="false" output="screen"/>
 
 </launch>
