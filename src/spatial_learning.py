@@ -3,6 +3,8 @@ from sklearn.linear_model import LogisticRegression
 import numpy as np
 import math
 import matplotlib.pyplot as plt
+from sklearn.externals import joblib
+from os import path
 
 def angle_between(v1, unit_vec):
     # v1 and v2 must have same dimensions
@@ -13,6 +15,8 @@ class LocationInfoLearner:
     """ Base class for spatial relationship learning.
     """
     def __init__(self):
+        self.type = ""
+
         self.direction_clf = LogisticRegression()
         self.proximity_clf = LogisticRegression()
 
@@ -22,12 +26,28 @@ class LocationInfoLearner:
         self.plane_vec = (1, 0, 0)
         self.z_vec = (0, 0, 1)
 
+    def load_models(self, destination_folder):
+        direction_path = path.join(destination_folder, self.type + "_direction.pkl")
+        self.direction_clf = joblib.load(direction_clf)
+
+        # TODO uncomment when running on complete train data
+        # proximity_path = path.join(destination_folder, self.type + "_proximity.pkl")
+        # self.proximity_clf = joblib.load(proximity_path)
+
+    def save_models(self, destination_folder):
+        direction_path = path.join(destination_folder, self.type + "_direction.pkl")
+        joblib.dump(self.direction_clf, direction_path)
+
+        # TODO uncomment when running on complete train data
+        # proximity_path = path.join(destination_folder, self.type + "_proximity.pkl")
+        # joblib.dump(self.proximity_clf, proximity_path)
+
     def preprocess(self, corpus_data):
         pass
 
     """ This version of train and predict uses spherical coordinates and a multivariable classifier -
     a better option for when data is plentiful and we want to reduce comp time
-    """
+
     # def train(self, X, Y):
     #     # X is a list of vectors
     #     # Y is a list of the terms used
@@ -45,6 +65,7 @@ class LocationInfoLearner:
     #     theta = angle_between((vec[0], vec[1], 0), self.plane_vec)
     #     phi = angle_between(vec, self.z_vec)
     #     return self.direction_clf.predict([[theta, phi]])
+    """
 
     def train(self, X, Y):
         # X is a list of object vectors
@@ -121,6 +142,9 @@ class ImageLocationLearner(LocationInfoLearner):
     """
     def __init__(self):
         super().__init__()
+        self.type = "img"
+
+
         self.direction_vocab = {"right": (1, 0), "left": (-1, 0), "front": (0, 1), "back": (0, -1)}
         self.location_vocab = {"center": (0, 0, 0)}
 
@@ -166,6 +190,8 @@ class ObjectLocationLearner(LocationInfoLearner):
     """
     def __init__(self):
         super().__init__()
+        self.type = 'obj'
+
         self.direction_vocab = {"right": (1, 0, 0), "left": (-1, 0, 0), "front": (0, -1, 0), "back": (0, 1, 0), "above": (0, 0, 1), "below": (0, 0, -1)}
         self.location_vocab = {"near": (0, 0, 0), "next": (0, 0, 0)}
 

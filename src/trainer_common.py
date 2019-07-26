@@ -4,9 +4,13 @@ from simple_listener import SimpleListener
 from hrc_discrim_learning.srv import TrainInput
 import env_perception
 import rospy
+import csv
+from collections import defaultdict
 
 class TrainHarness:
-    def __init__(self, name, srv_name, learners):
+    def __init__(self, name, srv_name, learners, mode):
+        # mode i.e. "spatial" or "features"
+        self.mode = mode
         # control msg mappings
         self.NEW_ENV    = 2
         self.CONTINUE   = 1
@@ -23,7 +27,8 @@ class TrainHarness:
         self.context = self.init_new_environment()
         self.all_learners = learners
 
-        self.run_training()
+
+        # self.run_training()
 
     def receive_train_input(self):
         rospy.wait_for_service(self.srv)
@@ -40,10 +45,10 @@ class TrainHarness:
         while not rospy.is_shutdown():
             input = self.receive_train_input()
             if input == self.ERROR:
-                break
+                return
             elif input.control == self.STOP_TRAIN:
                 self.end_train_input()
-                break
+                return
             elif input.control == self.NEW_ENV:
                 self.context = self.init_new_environment()
                 self.corpus_dict[self.context] = []
@@ -71,17 +76,81 @@ class TrainHarness:
         return context
 
     def train_all_learners(self):
-        # import pdb; pdb.set_trace()
         for learner in self.all_learners:
-            X, Y = learner.preprocess(self.corpus_dict)
+            X = self.Xdict[learner.type] + self.Xfromfile[learner.type]
+            Y = self.Ydict[learner.type] + self.Yfromfile[learner.type]
+
+            print(X)
+            print(Y)
+
             learner.train(X, Y)
             learner.print_function()
 
     def end_train_input(self):
         print("Finished train data collection")
 
-        for context in self.corpus_dict:
-            for obj, utt in self.corpus_dict[context]:
-                print('(Object(', obj.features, ')', utt, ')')
+        # for context in self.corpus_dict:
+        #     for obj, utt in self.corpus_dict[context]:
+        #         print('(Object(', obj.features, '),', utt, '),')
 
-        self.train_all_learners()
+
+        # processed train data from this system
+        self.Xdict = {}
+        self.Ydict = {}
+
+        # processed train data loaded from csv
+        self.Xfromfile = defaultdict(lambda: [])
+        self.Yfromfile = defaultdict(lambda: [])
+
+        # preprocessing
+        for learner in self.all_learners:
+            X, Y = learner.preprocess(self.corpus_dict)
+
+            # store processed data
+            self.Xdict[learner.type] = X
+            self.Ydict[learner.type] = Y
+
+        # train models
+        model_train_mode = rospy.get_param("hrc_discrim_learning/train_" + self.mode)
+
+        if model_train_mode == "new":
+            self.train_all_learners()
+
+        elif model_train_mode == "aggregate":
+            # load in old train data from csv
+            rospy.loginfo("Loading train data from file...")
+            filename = rospy.get_param("hrc_discrim_learning/corpus_file")
+
+            with open(filename, 'r', newline='') as infile:
+                r = csv.reader(infile, delimiter=',')
+                for row in r:
+                    # read data in format "type" | "X" .... "Xn" | "Y"
+                    print(row)
+                    y = row.pop()
+                    label = row[0]
+                    x = tuple([float(z) for z in row[1:]])
+
+                    self.Xfromfile[label].append(x)
+                    self.Yfromfile[label].append(y)
+
+            self.train_all_learners()
+
+        # save trained model(s)
+        if rospy.get_param("hrc_discrim_learning/save_" + self.mode):
+            destination = rospy.get_param("hrc_discrim_learning/model_dest_" + self.mode)
+            for learner in self.all_learners:
+                learner.save_models(destination)
+
+        # save new train data to csv
+        if rospy.get_param("hrc_discrim_learning/save_train_data"):
+            rospy.loginfo("Saving train data...")
+            filename = rospy.get_param("hrc_discrim_learning/corpus_file")
+            with open(filename, 'a') as outfile:
+                w = csv.writer(outfile)
+
+                for type in self.Xdict:
+                    X = self.Xdict[type]
+                    Y = self.Ydict[type]
+
+                    for x, y in zip(X, Y):
+                        w.writerow([type] + list(x) + [y])

@@ -45,7 +45,7 @@ class ScriptedTrainer:
         rospy.init_node('scripted_training')
         s = rospy.Service('train_spatial_input_provider', TrainInput, self.gen_input)
         while self.run:
-            rospy.sleep(5)
+            rospy.sleep(3)
 
 if __name__ == '__main__':
     t = ScriptedTrainer()
