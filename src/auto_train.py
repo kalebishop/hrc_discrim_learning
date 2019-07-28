@@ -5,18 +5,19 @@ import rospy
 class ScriptedTrainer:
     def __init__(self):
         self.training_script = [
-            [
-                (4, "left block"),
-                (1, "right block"),
-                (2, "front block"),
-                (5, "back block")
-            ],
             # [
-            #     (2, "right block"),
-            #     (4, "right block"),
-            #     (5, "left block"),
-            #     (1, "left block")
-            # ]
+            #     (4, "left block"),
+            #     (1, "right block"),
+            #     (2, "front block"),
+            #     (5, "back block")
+            #
+            # ],
+            [
+                (1, 'right'),
+                (2, 'left'),
+                (3, 'close'),
+                (4, 'far')
+            ]
         ]
 
         self.current_context = self.training_script.pop()
@@ -44,7 +45,7 @@ class ScriptedTrainer:
     def run_train_server(self):
         rospy.init_node('scripted_training')
         s = rospy.Service('train_spatial_input_provider', TrainInput, self.gen_input)
-        while self.run:
+        while self.run and not rospy.is_shutdown():
             rospy.sleep(3)
 
 if __name__ == '__main__':

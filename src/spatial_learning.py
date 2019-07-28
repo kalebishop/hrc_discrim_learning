@@ -3,7 +3,7 @@ from sklearn.linear_model import LogisticRegression
 import numpy as np
 import math
 import matplotlib.pyplot as plt
-from sklearn.externals import joblib
+import joblib
 from os import path
 
 def angle_between(v1, unit_vec):
