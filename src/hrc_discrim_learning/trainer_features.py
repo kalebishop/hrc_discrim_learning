@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import rospy
 from hrc_discrim_learning.trainer_common import TrainHarness
 from hrc_discrim_learning.feature_learning import IncrementalLearner
 from hrc_discrim_learning.spatial_learning import ImageLocationLearner
