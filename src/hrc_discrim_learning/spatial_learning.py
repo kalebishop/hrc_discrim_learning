@@ -28,7 +28,7 @@ class LocationInfoLearner:
 
     def load_models(self, destination_folder):
         direction_path = path.join(destination_folder, self.type + "_direction.pkl")
-        self.direction_clf = joblib.load(direction_clf)
+        self.direction_clf = joblib.load(direction_path)
 
         # TODO uncomment when running on complete train data
         # proximity_path = path.join(destination_folder, self.type + "_proximity.pkl")

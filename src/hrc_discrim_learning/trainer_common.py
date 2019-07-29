@@ -1,8 +1,8 @@
 #!/usr/bin/env python
-from base import AdaptiveContext
-from simple_listener import SimpleListener
+from hrc_discrim_learning.base import AdaptiveContext
+from hrc_discrim_learning.simple_listener import SimpleListener
 from hrc_discrim_learning.srv import TrainInput
-import env_perception
+from hrc_discrim_learning import env_perception
 import rospy
 import csv
 from collections import defaultdict
@@ -80,8 +80,8 @@ class TrainHarness:
             X = self.Xdict[learner.type] + self.Xfromfile[learner.type]
             Y = self.Ydict[learner.type] + self.Yfromfile[learner.type]
 
-            print(X)
-            print(Y)
+            # print(X)
+            # print(Y)
 
             learner.train(X, Y)
             learner.print_function()
