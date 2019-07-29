@@ -7,13 +7,15 @@ class ScriptedTrainer:
     def __init__(self):
         # TODO: fix
         ##########################
-        with open("/ros/catkin_ws/src/hrc_discrim_learning/train/spoken_descriptions.json") as f:
+        with open(rospy.get_param("hrc_discrim_learning/train_data_file")) as f:
             d = json.load(f)
 
         self.training_script = []
-        for id, utt in d.items():
-            id = int(id)
-            self.training_script.append((id, utt))
+
+        for context in d:
+            for id, utt in d[context].items():
+                id = int(id)
+                self.training_script.append((id, utt))
 
         self.training_script = [self.training_script]
         ########################
@@ -42,7 +44,7 @@ class ScriptedTrainer:
 
     def run_train_server(self):
         rospy.init_node('scripted_training')
-        s = rospy.Service('train_spatial_input_provider', TrainInput, self.gen_input)
+        s = rospy.Service('train_input_provider', TrainInput, self.gen_input)
         while self.run and not rospy.is_shutdown():
             rospy.sleep(3)
 

@@ -5,20 +5,21 @@ from base import Object
 import json
 
 def bootstrap_from_file(mappings):
-    filename = rospy.get_param('/hrc_discrim_learning/obj_mapping_file')
+    filename = rospy.get_param('/hrc_discrim_learning/obj_location_file')
     with open(filename, 'r') as f:
         obj_dict = json.load(f)
 
     objs = []
 
-    for id in obj_dict:
-        features = mappings[id]
-        features['id'] = int(id)
-        features['orientation'] = tuple(obj_dict[id]['orientation'])
-        features['location'] = tuple(obj_dict[id]['location'])
+    for context in obj_dict:
+        for id in obj_dict[context]:
+            features = mappings[id]
+            features['id'] = int(id)
+            features['orientation'] = tuple(obj_dict[context][id]['orientation'])
+            features['location'] = tuple(obj_dict[context][id]['location'])
 
-        o = Object(features)
-        objs.append(o)
+            o = Object(features)
+            objs.append(o)
 
     return objs
 
@@ -46,7 +47,7 @@ def bootstrap_aruco_env_info(mappings):
     return objs
 
 def bootstrap_env_info():
-    with open(rospy.get_param("hrc_discrim_learning/perception_map")) as f:
+    with open(rospy.get_param("hrc_discrim_learning/obj_mapping_file")) as f:
         mappings = json.load(f)
 
     if rospy.get_param('hrc_discrim_learning/use_aruco'):

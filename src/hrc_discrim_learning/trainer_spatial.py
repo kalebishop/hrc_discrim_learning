@@ -8,5 +8,5 @@ if __name__ == '__main__':
     # l2 = ObjectLocationLearner()
     all_learners = [l1]
 
-    t = TrainHarness('train_spatial', '/train_spatial_input_provider', all_learners, 'spatial')
+    t = TrainHarness('train_spatial', '/train_input_provider', all_learners, 'spatial')
     t.run_training()

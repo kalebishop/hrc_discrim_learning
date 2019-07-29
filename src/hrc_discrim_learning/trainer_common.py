@@ -20,13 +20,22 @@ class TrainHarness:
         self.listener = SimpleListener()
         self.srv      = srv_name
 
+        # Ros params
+        self.save_model     = rospy.get_param("hrc_discrim_learning/save_model")
+        self.save_dest      = rospy.get_param("hrc_discrim_learning/save_dest")
+
+        self.train_mode     = rospy.get_param("hrc_discrim_learning/train_mode")
+        self.train_data_file= rospy.get_param("hrc_discrim_learning/train_data_file")
+
+        self.save_train_data= rospy.get_param("hrc_discrim_learning/save_train_data")
+        self.corpus_file    = rospy.get_param("hrc_discrim_learning/corpus_file")
+
         self.corpus_dict = {}
 
         rospy.init_node(name)
 
         self.context = self.init_new_environment()
         self.all_learners = learners
-
 
         # self.run_training()
 
@@ -111,15 +120,13 @@ class TrainHarness:
             self.Ydict[learner.type] = Y
 
         # train models
-        model_train_mode = rospy.get_param("hrc_discrim_learning/train_" + self.mode)
-
-        if model_train_mode == "new":
+        if self.train_mode == "new":
             self.train_all_learners()
 
-        elif model_train_mode == "aggregate":
+        elif self.train_mode == "aggregate":
             # load in old train data from csv
             rospy.loginfo("Loading train data from file...")
-            filename = rospy.get_param("hrc_discrim_learning/corpus_file")
+            filename = self.corpus_file
 
             with open(filename, 'r', newline='') as infile:
                 r = csv.reader(infile, delimiter=',')
@@ -136,15 +143,15 @@ class TrainHarness:
             self.train_all_learners()
 
         # save trained model(s)
-        if rospy.get_param("hrc_discrim_learning/save_" + self.mode):
-            destination = rospy.get_param("hrc_discrim_learning/model_dest_" + self.mode)
+        if self.save_model:
+            destination = self.save_dest
             for learner in self.all_learners:
                 learner.save_models(destination)
 
         # save new train data to csv
-        if rospy.get_param("hrc_discrim_learning/save_train_data"):
+        if self.save_train_data:
             rospy.loginfo("Saving train data...")
-            filename = rospy.get_param("hrc_discrim_learning/corpus_file")
+            filename = self.corpus_data
             with open(filename, 'a') as outfile:
                 w = csv.writer(outfile)
 
