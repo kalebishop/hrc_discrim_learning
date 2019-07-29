@@ -1,8 +1,0 @@
-prefix=/usr/local
-
-Name: hrc_discrim_learning
-Description: Description of hrc_discrim_learning
-Version: 0.0.0
-Cflags: 
-Libs: -L/usr/local/lib 
-Requires: 

@@ -1,2 +1,0 @@
-- setup-file:
-    local-name: /ros/catkin_ws/src/hrc_discrim_learning/devel/setup.sh
