@@ -4,13 +4,12 @@ from aruco_msgs.msg import MarkerArray
 from base import Object
 import json
 
-def bootstrap_from_file():
+def bootstrap_from_file(mappings):
     filename = rospy.get_param('/hrc_discrim_learning/obj_mapping_file')
     with open(filename, 'r') as f:
         obj_dict = json.load(f)
 
     objs = []
-    mappings = rospy.get_param('/perception/objs')
 
     for id in obj_dict:
         features = mappings[id]
@@ -23,7 +22,7 @@ def bootstrap_from_file():
 
     return objs
 
-def bootstrap_aruco_env_info():
+def bootstrap_aruco_env_info(mappings):
     rospy.loginfo("Waiting for aruco env bootstrap info...")
     # msg = rospy.wait_for_message('/aruco_pub/markers', MarkerArray)
     key = input("Press enter to capture environment.\n")
@@ -31,8 +30,6 @@ def bootstrap_aruco_env_info():
     rospy.loginfo("Bootstrap info received")
 
     objs = []
-
-    mappings = rospy.get_param('/perception/objs')
 
     for marker in msg.markers:
         id = str(marker.id)
@@ -49,10 +46,13 @@ def bootstrap_aruco_env_info():
     return objs
 
 def bootstrap_env_info():
+    with open(rospy.get_param("hrc_discrim_learning/perception_map")) as f:
+        mappings = json.load(f)
+
     if rospy.get_param('hrc_discrim_learning/use_aruco'):
-        return bootstrap_aruco_env_info()
+        return bootstrap_aruco_env_info(mappings)
     else:
-        return bootstrap_from_file()
+        return bootstrap_from_file(mappings)
 
 if __name__ == '__main__':
     bootstrap_env_info()

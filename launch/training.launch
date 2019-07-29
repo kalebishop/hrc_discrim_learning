@@ -1,6 +1,6 @@
 <launch>
   <!-- INPUT ARGUMENTS  -->
-  <!-- Whether to use pre-saved train utterance data for this session or not-->
+  <!-- Whether to use pre-saved train utterance data  (id-utterance pairings) for this session-->
   <arg name="use_auto_train" default="true"/>
   <!-- Whether to use the aruco stuff or not -->
   <arg name="use_aruco" default="true"/>
@@ -29,16 +29,7 @@
 
 
   <!-- Object database -->
-  <rosparam param="/perception/objs">
-    '0': {'color': 'yellow', 'material': 'paper', 'type': 'notepad', 'size_relative': 'small'}
-    '1': {'color': 'pink', 'material': 'paper', 'type': 'notepad', 'size_relative': 'small'}
-    '2': {'color': 'black', 'material': 'plastic', 'type': 'tablet', 'size_relative': 'large'}
-    '3': {'color': 'black', 'material': 'glass', 'type': 'tablet', 'size_relative': 'small'}
-    '4': {'color': 'black', 'material': 'plastic', 'type': 'pen', 'size_relative': 'small'}
-    '5': {'color': 'pink', 'material': 'plastic', 'type': 'pen', 'size_relative': 'small'}
-    '6': {'color': 'blue', 'material': 'plastic', 'type': 'pen', 'size_relative': 'small'}
-    '7': {'color': 'green', 'material': 'plastic', 'type': 'pen', 'size_relative': 'small'}
-  </rosparam>
+  <param name="hrc_discrim_learning/perception_map"       value="$(find hrc_discrim_learning)/train/perceptual_mapping.json"/>
 
   <!-- ARUCO_ROS stuff -->
   <group if="$(arg use_aruco)">
