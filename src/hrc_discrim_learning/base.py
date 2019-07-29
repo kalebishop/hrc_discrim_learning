@@ -22,18 +22,7 @@ class Context:
         self.env = objs
         self.env_size = len(objs)
 
-    def shared_categorical_feature(self, feature, value):
-        """ feature must be categorical (value is a string)
-            returns a list of all objs with the correct value of feature"""
-        shared = []
-        for o in objs:
-            if o.get_feature_class_value(feature) == value:
-                shared.append(o)
-        return shared
-
-    def shared_continuous_category(self, feature_array, term):
-        """ feature must be continuous, term is a string describing the object on features in feature_array
-            returns a list of all objs to which term descibes them on features"""
+    def shared_features(self, feature, value):
         pass
 
 class AdaptiveContext(Context):
@@ -42,10 +31,37 @@ class AdaptiveContext(Context):
     """
     def __init__(self, objs):
         super().__init__(objs)
+        self.spatial_model = 0
         # what else?
-        self.initialize_workspace_location_info()
+        self._initialize_workspace_location_info()
 
-    def initialize_workspace_location_info(self):
+    def get_obj_context_value(self, obj, feature):
+        if feature == 'location':
+            return self.obj_location(obj)[0]
+        else:
+            return obj.get_feature_class_value(feature)
+
+    def shared_features(self, feature, value):
+        if not self.spatial_model:
+            print("Error: initialize a spatial model before calling this function")
+            return []
+
+        res = []
+        c = 0
+
+        for obj in self.env:
+            if self.get_obj_context_value(feature) == value:
+                res.append(obj)
+                c+=1
+        return res, c
+
+    def init_spatial_model(self, spatial_model):
+        self.spatial_model = spatial_model
+
+    def obj_location(self, obj):
+        return self.spatial_model.predict(obj, self)
+
+    def _initialize_workspace_location_info(self):
         # should all this be calculated dynamically?
         # calculate centroid (based on x, y)
         sum_x = 0

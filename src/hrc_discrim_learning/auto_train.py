@@ -1,24 +1,22 @@
 #!/usr/bin/env python
 from hrc_discrim_learning.srv import *
 import rospy
+import json
 
 class ScriptedTrainer:
     def __init__(self):
-        self.training_script = [
-            # [
-            #     (4, "left block"),
-            #     (1, "right block"),
-            #     (2, "front block"),
-            #     (5, "back block")
-            #
-            # ],
-            [
-                (1, 'right'),
-                (2, 'left'),
-                (3, 'close'),
-                (4, 'far')
-            ]
-        ]
+        # TODO: fix
+        ##########################
+        with open("/ros/catkin_ws/src/hrc_discrim_learning/train/spoken_descriptions.json") as f:
+            d = json.load(f)
+
+        self.training_script = []
+        for id, utt in d.items():
+            id = int(id)
+            self.training_script.append((id, utt))
+
+        self.training_script = [self.training_script]
+        ########################
 
         self.current_context = self.training_script.pop()
 

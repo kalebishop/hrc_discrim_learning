@@ -23,6 +23,8 @@
   <!-- <param name="hrc_discrim_learning/use_auto_train"       value="$(arg use_auto_train)"/> -->
   <param name="hrc_discrim_learning/save_train_data"      value="$(arg save_train_data)"/>
   <param name="hrc_discrim_learning/corpus_file"          value="$(arg corpus_file)"/>
+
+  <!-- spatial training stuff -->
   <param name="hrc_discrim_learning/train_spatial"        value="$(arg train_spatial)"/>
   <param name="hrc_discrim_learning/save_spatial"         value="$(arg save_spatial)"/>
   <param name="hrc_discrim_learning/model_dest_spatial"   value="$(arg model_dest_spatial)"/>

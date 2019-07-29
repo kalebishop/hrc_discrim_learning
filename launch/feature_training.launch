@@ -1,0 +1,57 @@
+<launch>
+  <!-- INPUT ARGUMENTS  -->
+  <!-- Whether to use pre-saved train utterance data  (id-utterance pairings) for this session-->
+  <arg name="use_auto_train" default="true"/>
+  <!-- Whether to use the aruco stuff or not -->
+  <arg name="use_aruco" default="false"/>
+  <!-- Json file to draw id-location mappings if aruco is not used -->
+  <arg name="obj_mapping_file" default="$(find hrc_discrim_learning)/train/objects.json"/>
+  <!-- Whether to save corpus data from this session -->
+  <arg name="save_train_data" default="false"/>
+  <!-- File destination for saving/loading corpus data as csv -->
+  <arg name="corpus_file" default="$(find hrc_discrim_learning)/train/corpus.csv"/>
+
+
+  <!-- Mode for training feature models this session: May be set to "new", "aggregate" or "off" -->
+  <arg name="train_feature" default="new"/>
+  <!-- Whether to save model from this session -->
+  <arg name="save_feature" default="false"/>
+  
+  <!-- File destination for saving trained spatial models -->
+  <arg name="model_dest_spatial" default="$(find hrc_discrim_learning)/model/spatial_regressors"/>
+
+  <!-- ROS PARAMETERS -->
+  <param name="hrc_discrim_learning/use_aruco"            value="$(arg use_aruco)"/>
+  <param name="hrc_discrim_learning/obj_mapping_file"     value="$(arg obj_mapping_file)"/>
+  <!-- <param name="hrc_discrim_learning/use_auto_train"       value="$(arg use_auto_train)"/> -->
+  <param name="hrc_discrim_learning/save_train_data"      value="$(arg save_train_data)"/>
+  <param name="hrc_discrim_learning/corpus_file"          value="$(arg corpus_file)"/>
+
+  <!-- spatial training stuff -->
+  <param name="hrc_discrim_learning/model_dest_spatial"   value="$(arg model_dest_spatial)"/>
+
+  <!-- feature training stuff -->
+  <param name="hrc_discrim_learning/train_feature"        value="$(arg train_feature)"/>
+  <param name="hrc_discrim_learning/save_feature"         value="$(arg save_feature)"/>
+  <!-- <param name="hrc_discrim_learning/model_dest_feature"   value="$(arg model_dest_spatial)"/> -->
+
+
+  <!-- Object database -->
+  <param name="hrc_discrim_learning/perception_map"       value="$(find hrc_discrim_learning)/train/perceptual_mapping.json"/>
+
+  <!-- ARUCO_ROS stuff -->
+  <group if="$(arg use_aruco)">
+    <include file="$(find hrc_discrim_learning)/launch/basic_aruco.launch"/>
+  </group>
+
+  <!-- Node to feed in training data -->
+  <group if="$(arg use_auto_train)">
+    <node pkg="hrc_discrim_learning" type="auto_train.py" name="scripted_training" respawn="false">
+      <param name="train_mode" value="feature"/>
+    </node>
+  </group>
+
+  <!-- Learner node -->
+  <node pkg="hrc_discrim_learning" type="trainer_features.py" name="train_features" respawn="false" output="screen"/>
+
+</launch>
