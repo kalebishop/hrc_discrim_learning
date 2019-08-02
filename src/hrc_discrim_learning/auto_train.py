@@ -7,20 +7,20 @@ class ScriptedTrainer:
     def __init__(self):
         # TODO: fix
         ##########################
-        with open(rospy.get_param("hrc_discrim_learning/train_data_file")) as f:
+        # with open(rospy.get_param("hrc_discrim_learning/train_data_file")) as f:
+        with open("/ros/catkin_ws/src/hrc_discrim_learning/train/spoken_descriptions.json", 'r') as f:
             d = json.load(f)
 
-        self.training_script = []
+        self.training_script = {}
 
-        for context in d:
-            for id, utt in d[context].items():
+        for context_name in d:
+            data = []
+            for id, utt in d[context_name].items():
                 id = int(id)
-                self.training_script.append((id, utt))
+                data.append((id, utt))
+            self.training_script[context_name] = data
 
-        self.training_script = [self.training_script]
         ########################
-
-        self.current_context = self.training_script.pop()
 
         self.NEW_ENV    = 2
         self.CONTINUE   = 1
@@ -29,15 +29,29 @@ class ScriptedTrainer:
 
         self.run        = True
 
+        self.current_context = None
+
+        print(self.training_script)
+
     def gen_input(self, req):
         rospy.loginfo("Got request")
+
+        name = req.context_name
+
+        if not req.ask:
+            self.run = False
+            return TrainInputResponse(self.STOP_TRAIN, 0, "")
+            
         if not self.current_context:
-            if not self.training_script:
-                self.run = False
-                return TrainInputResponse(self.STOP_TRAIN, 0, "")
-            else:
-                self.current_context = self.training_script.pop()
-                return TrainInputResponse(self.NEW_ENV, 0, "")
+            self.current_context = self.training_script.pop(name, None)
+
+        if not self.training_script:
+            self.run = False
+            return TrainInputResponse(self.STOP_TRAIN, 0, "")
+
+        elif not self.current_context:
+            return TrainInputResponse(self.NEW_ENV, 0, "")
+
         else:
             id, utt = self.current_context.pop()
             return TrainInputResponse(self.CONTINUE, id, utt)

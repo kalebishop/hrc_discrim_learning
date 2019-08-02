@@ -29,9 +29,10 @@ class AdaptiveContext(Context):
     """
 
     """
-    def __init__(self, objs):
+    def __init__(self, objs, name=""):
         super().__init__(objs)
         self.spatial_model = 0
+        self.name = name
         # what else?
         self._initialize_workspace_location_info()
 
@@ -50,7 +51,7 @@ class AdaptiveContext(Context):
         c = 0
 
         for obj in self.env:
-            if self.get_obj_context_value(feature) == value:
+            if self.get_obj_context_value(obj, feature) == value:
                 res.append(obj)
                 c+=1
         return res, c
@@ -59,6 +60,7 @@ class AdaptiveContext(Context):
         self.spatial_model = spatial_model
 
     def obj_location(self, obj):
+        print(obj.get_feature_class_value('location'))
         return self.spatial_model.predict(obj, self)
 
     def _initialize_workspace_location_info(self):

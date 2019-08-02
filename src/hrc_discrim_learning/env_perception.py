@@ -1,59 +1,36 @@
 #!/usr/bin/env python
 import rospy
-from aruco_msgs.msg import MarkerArray
-from base import Object
+# from aruco_msgs.msg import MarkerArray
+from hrc_discrim_learning.base import Object, AdaptiveContext
 import json
 
-def bootstrap_from_file(mappings):
-    filename = rospy.get_param('/hrc_discrim_learning/obj_location_file')
-    with open(filename, 'r') as f:
-        obj_dict = json.load(f)
-
-    objs = []
-
-    for context in obj_dict:
-        for id in obj_dict[context]:
-            features = mappings[id]
-            features['id'] = int(id)
-            features['orientation'] = tuple(obj_dict[context][id]['orientation'])
-            features['location'] = tuple(obj_dict[context][id]['location'])
-
-            o = Object(features)
-            objs.append(o)
-
-    return objs
-
-def bootstrap_aruco_env_info(mappings):
-    rospy.loginfo("Waiting for aruco env bootstrap info...")
-    # msg = rospy.wait_for_message('/aruco_pub/markers', MarkerArray)
-    key = input("Press enter to capture environment.\n")
-    msg = rospy.wait_for_message('/aruco_pub/markers', MarkerArray)
-    rospy.loginfo("Bootstrap info received")
-
-    objs = []
-
-    for marker in msg.markers:
-        id = str(marker.id)
-        features = mappings[id]
-        pt = marker.pose.pose.position
-        ot = marker.pose.pose.orientation
-        features['location']    = (pt.x, pt.y, pt.z) # Point obj
-        features['orientation'] = (ot.x, ot.y, ot.z, ot.w) #  Quaternion obj
-        features['id'] = marker.id
-
-        o = Object(features)
-        objs.append(o)
-
-    return objs
-
 def bootstrap_env_info():
-    with open(rospy.get_param("hrc_discrim_learning/obj_mapping_file")) as f:
-        mappings = json.load(f)
+    # if rospy.get_param('hrc_discrim_learning/use_perception'):
+    if False:
+        # TODO: implement
+        pass
 
-    if rospy.get_param('hrc_discrim_learning/use_aruco'):
-        return bootstrap_aruco_env_info(mappings)
     else:
-        return bootstrap_from_file(mappings)
+        filename = rospy.get_param('/hrc_discrim_learning/env_file')
+        # filename = "/ros/catkin_ws/src/hrc_discrim_learning/train/full_envs.json"
+
+        with open(filename, 'r') as f:
+            all_contexts = json.load(f)
+
+        for context_name in all_contexts:
+            env_obj_list = []
+            all_objs = all_contexts[context_name]
+            for obj_id in all_objs:
+                features = all_objs[obj_id]
+                features['id'] = int(obj_id)
+                o = Object(features)
+                env_obj_list.append(o)
+
+            yield AdaptiveContext(env_obj_list, context_name)
+
+        while True:
+            yield None
+
 
 if __name__ == '__main__':
     bootstrap_env_info()

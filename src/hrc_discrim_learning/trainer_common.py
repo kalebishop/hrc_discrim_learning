@@ -30,11 +30,11 @@ class TrainHarness:
         self.save_train_data= rospy.get_param("hrc_discrim_learning/save_train_data")
         self.corpus_file    = rospy.get_param("hrc_discrim_learning/corpus_file")
 
-        self.corpus_dict = {}
-
         rospy.init_node(name)
 
+        self.gen_contexts = env_perception.bootstrap_env_info()
         self.context = self.init_new_environment()
+        self.corpus_dict = {self.context: []}
         self.all_learners = learners
 
         # self.run_training()
@@ -43,7 +43,7 @@ class TrainHarness:
         rospy.wait_for_service(self.srv)
         try:
             input_provider = rospy.ServiceProxy(self.srv, TrainInput)
-            resp = input_provider(1)
+            resp = input_provider(1, self.context.name)
             return resp
 
         except rospy.ServiceException:
@@ -60,7 +60,11 @@ class TrainHarness:
                 return
             elif input.control == self.NEW_ENV:
                 self.context = self.init_new_environment()
-                self.corpus_dict[self.context] = []
+                if not self.context:
+                    self.end_train_input()
+                    return
+                else:
+                    self.corpus_dict[self.context] = []
 
             else:
                 obj_id = input.id
@@ -79,9 +83,7 @@ class TrainHarness:
                 self.corpus_dict[self.context].append((ref_obj, processed_utt))
 
     def init_new_environment(self):
-        objs = env_perception.bootstrap_env_info()
-        context = AdaptiveContext(objs)
-        self.corpus_dict[context] = []
+        context = next(self.gen_contexts)
         return context
 
     def train_all_learners(self):

@@ -7,12 +7,10 @@
   <!-- Location in which to save/retrieve processed data -->
   <arg name="corpus_file" default="$(find hrc_discrim_learning)/train/spatial_corpus.csv"/>
 
-  <!-- Whether to use the aruco stuff -->
-  <arg name="use_aruco" default="false"/>
-  <!-- File containing object locations, if not using aruco -->
-  <arg name="obj_location_file" default="$(find hrc_discrim_learning)/train/object_locations.json"/>
-  <!-- File containing object id-feature mappings -->
-  <arg name="obj_mapping_file" default="$(find hrc_discrim_learning)/train/perceptual_mapping.json"/>
+  <!-- Whether to use the perception stuff -->
+  <arg name="use_perception" default="false"/>
+  <!-- File containing environments, if not using perception -->
+  <arg name="env_file" default="$(find hrc_discrim_learning)/train/full_envs.json"/>
   <!-- File containing newest training (id, utterance) data -->
   <arg name="train_data_file" default="$(find hrc_discrim_learning)/train/spatial_train_data.json"/>
   <!-- Whether to save the model trained this session -->
@@ -21,7 +19,7 @@
   <arg name="save_dest" default="$(find hrc_discrim_learning)/model/spatial"/>
 
   <!-- ROS PARAMETERS -->
-  <param name="hrc_discrim_learning/use_aruco"          value="$(arg use_aruco)"/>
+  <param name="hrc_discrim_learning/use_perception"          value="$(arg use_perception)"/>
   <param name="hrc_discrim_learning/obj_location_file"  value="$(arg obj_location_file)"/>
 
   <param name="hrc_discrim_learning/obj_mapping_file"   value="$(arg obj_mapping_file)"/>
@@ -35,8 +33,8 @@
 
 
   <!-- LAUNCH -->
-  <group if="$(arg use_aruco)">
-    <include file="$(find hrc_discrim_learning)/launch/basic_aruco.launch"/>
+  <group if="$(arg use_perception)">
+    <include file="$(find hrc_discrim_learning)/launch/basic_perception.launch"/>
   </group>
 
   <node pkg="hrc_discrim_learning" type="auto_train.py" name="scripted_training" respawn="false" output="screen"/>

@@ -25,7 +25,13 @@ Learning to naturalistically verbally discriminate objects across various enviro
 **cam_info.yaml**: Defines the camera_info published to `usb_cam/camera_info` on launch.  
 **training.launch**: Launchfile for current training system.  
 
+## Dependencies:
+usb_cam
+aruco_ros
+image_pipeline
+
 ***
 ```
-roslaunch hrc_discrim_learning training.launch
+roslaunch hrc_discrim_learning spatial_training.launch
+roslaunch hrc_discrim_learning feature_training.launch
 ```

@@ -8,7 +8,10 @@ from os import path
 
 def angle_between(v1, unit_vec):
     # v1 and v2 must have same dimensions
-    v1 = v1 / np.linalg.norm(v1)
+    norm = np.linalg.norm(v1)
+    if norm == 0:
+        return 3.14
+    v1 = v1 / norm
     return np.arccos(np.clip(np.dot(v1, unit_vec), -1.0, 1.0))
 
 class LocationInfoLearner:
@@ -165,10 +168,10 @@ class ImageLocationLearner(LocationInfoLearner):
                         obj_vector = (xi, yi)
 
                         # for debugging
-                        id = obj.get_feature_class_value('id')
-                        print()
-                        print('named:', data)
-                        print("obj", id, "loc", xi, yi, zi, "vec", obj_vector)
+                        # id = obj.get_feature_class_value('id')
+                        # print()
+                        # print('named:', data)
+                        # print("obj", id, "loc", xi, yi, zi, "vec", obj_vector)
                         # # # # #
 
                         X.append(obj_vector)
@@ -180,6 +183,7 @@ class ImageLocationLearner(LocationInfoLearner):
         location = obj.get_feature_class_value("location")
         x, y, z = np.subtract(location, context.workspace_centroid)
         obj_workspace_vector = (x, y)
+        # print("in spatial_learning:", obj_workspace_vector)
         return self.predict_from_vector(obj_workspace_vector)
 
     def print_function(self):
