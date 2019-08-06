@@ -2,7 +2,7 @@
 import rospy
 from hrc_discrim_learning.trainer_common import TrainHarness
 # from hrc_discrim_learning.feature_learning import IncrementalLearner
-from hrc_discrim_learning.perceptron_selection import IncrementalFeatureSelector
+from hrc_discrim_learning.sgd_learner import IncrementalFeatureSelector
 from hrc_discrim_learning.spatial_learning import ImageLocationLearner
 
 # if __name__ == "__main__":
@@ -22,7 +22,9 @@ if __name__ == "__main__":
     loc_model = ImageLocationLearner()
     loc_model.load_models(spatial_model_dest)
 
-    feat_learner = IncrementalFeatureSelector(loc_model)
+    rank = ['size_relative', 'color', 'type', 'location']
+
+    feat_learner = IncrementalFeatureSelector(rank, loc_model, 0, 0)
 
     all_learners = [feat_learner]
 
