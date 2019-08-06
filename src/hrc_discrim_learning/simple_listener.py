@@ -18,9 +18,9 @@ class SimpleListener:
             "color": self.color,
             "material": self.material,
             "type": self.object_type,
-            "workspace_location": self.location_relative,
+            "location": self.location_relative,
             "length": self.length_relative,
-            "size": self.size_relative
+            "size_relative": self.size_relative
         }
 
     def term_is_relative(self, term):

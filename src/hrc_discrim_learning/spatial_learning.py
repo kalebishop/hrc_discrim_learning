@@ -163,7 +163,7 @@ class ImageLocationLearner(LocationInfoLearner):
             # # # # #
             for obj, utt in corpus_data[context]:
                 for cls, data in utt:
-                    if cls == 'workspace_location':
+                    if cls == "location":
                         xi, yi, zi = obj.get_feature_class_value("location")
                         obj_vector = (xi, yi)
 

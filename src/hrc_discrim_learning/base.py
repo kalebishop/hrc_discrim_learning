@@ -60,7 +60,7 @@ class AdaptiveContext(Context):
         self.spatial_model = spatial_model
 
     def obj_location(self, obj):
-        print(obj.get_feature_class_value('location'))
+        print(obj.get_feature_class_value("location"))
         return self.spatial_model.predict(obj, self)
 
     def _initialize_workspace_location_info(self):
@@ -75,7 +75,7 @@ class AdaptiveContext(Context):
         z_bounds = [math.inf, -math.inf]
 
         for o in self.env:
-            x, y, z = o.get_feature_class_value('location')
+            x, y, z = o.get_feature_class_value("location")
             sum_x += x
             sum_y += y
 

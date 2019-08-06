@@ -22,6 +22,9 @@ class SGD:
     def score(self, X, Y):
         raise NotImplementedError
 
+    def get_learned_function(self):
+        return self.clf.coef_, self.clf.intercept_
+
 class IncrementalFeatureSelector:
     def __init__(self, features_ranked, spatial_model, size_model, color_model):
         # these all should be pretrained
@@ -42,14 +45,15 @@ class IncrementalFeatureSelector:
 
     def produce_input(self, feature, obj, context):
         # TODO: make not stupid
-        if feature == 'workspace_location':
+        if feature == "location":
             res, conf = self.sp_model.predict(obj, context)
+            conf = conf[0]
 
         # TODO: uncomment after implementing custom models for color and size
         # elif feature == 'color':
         #     res, conf = self.co_model.predict(obj, context)
         #
-        # elif feature == 'size_relative':
+        # elif feature == 'size':
         #     res, conf = self.sz_model.predict(obj, context)
 
         else:
@@ -90,6 +94,9 @@ class IncrementalFeatureSelector:
         Xall = Xall_list[0]
         Yall = Yall_list[0]
         for f in self.features:
+            print("Training ", f)
+            print(Xall[f])
+            print(Yall[f])
             self.clf_models[f].train(Xall[f], Yall[f])
 
     def _incremental_predict(self, obj, context, features):
@@ -123,3 +130,12 @@ class IncrementalFeatureSelector:
             features = list(set(features) - set(feature))
             if not features:
                 return output
+
+    def print_function(self):
+        for f in self.clf_models:
+            print()
+            print('----------------------------------')
+            print(f)
+            coeff, intercept = self.clf_models[f].get_learned_function()
+            print("Coeff: ", coeff)
+            print("Intercept: ", intercept)
