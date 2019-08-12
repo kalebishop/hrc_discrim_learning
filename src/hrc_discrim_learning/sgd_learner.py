@@ -1,5 +1,8 @@
+import joblib
+from os import path
 from sklearn.linear_model import SGDClassifier
 from sklearn.preprocessing import StandardScaler
+
 from hrc_discrim_learning.base import AdaptiveContext
 
 class SGD:
@@ -25,8 +28,18 @@ class SGD:
     def get_learned_function(self):
         return self.clf.coef_, self.clf.intercept_
 
+    def save_model(self, file_dest):
+        joblib.dump(self.clf, file_dest)
+    def save_scaler(self, file_dest):
+        joblib.dump(self.sc, file_dest)
+
+    def load_model(self, file_dest):
+        self.clf = joblib.load(file_dest)
+    def load_scaler(self, file_dest):
+        self.sc = joblib.load(file_dest)
+
 class IncrementalFeatureSelector:
-    def __init__(self, features_ranked, spatial_model, size_model, color_model):
+    def __init__(self, features_ordered, spatial_model, size_model, color_model):
         # these all should be pretrained
         self.sp_model = spatial_model
         self.sz_model = size_model
@@ -34,14 +47,16 @@ class IncrementalFeatureSelector:
 
         self.type = 'SGDMaster'
 
-        self.features = features_ranked
-        self.clf_models = {f : SGD() for f in features_ranked}
+        self.features = features_ordered
+        self.salience_ranking = features_ordered
+
+        self.clf_models = {f : SGD() for f in features_ordered}
 
     def _calc_discrim_score(self, obj, context, feature, value):
         orig_size = context.env_size
         objs, count = context.shared_features(feature, value)
 
-        return count / orig_size, objs
+        return (orig_size - count) / orig_size, objs
 
     def produce_input(self, feature, obj, context):
         # TODO: make not stupid
@@ -62,7 +77,7 @@ class IncrementalFeatureSelector:
             conf = None
 
         dscore, objs_remaining = self._calc_discrim_score(obj, context, feature, res)
-        return dscore, conf, objs_remaining
+        return dscore, res, conf, objs_remaining
 
     def preprocess(self, corpus_dict):
         # raise NotImplementedError
@@ -76,7 +91,7 @@ class IncrementalFeatureSelector:
                 features_used = set([t[0] for t in utt])
 
                 for f in self.features:
-                    dscore, conf, res_objs = self.produce_input(f, obj, context)
+                    dscore, label, conf, res_objs = self.produce_input(f, obj, context)
                     if conf:
                         x = [dscore, conf]
                     else:
@@ -99,14 +114,23 @@ class IncrementalFeatureSelector:
             print(Yall[f])
             self.clf_models[f].train(Xall[f], Yall[f])
 
+        # NEW: add calculation of rank based on intercept
+        all_ints = {}
+        for f in self.clf_models:
+            coef, intercept = self.clf_models[f].get_learned_function()
+            all_ints[f] = intercept
+
+        self.salience_ranking.sort(key= lambda x: all_ints[x])
+
     def _incremental_predict(self, obj, context, features):
         for f in features:
-            dscore, conf, objs_remaining = self.produce_input(f, obj, context)
+            dscore, label, conf, objs_remaining = self.produce_input(f, obj, context)
 
             if conf:
-                Y, label = self.clf_models[f].predict([dscore, conf])
+                Y = self.clf_models[f].predict([[dscore, conf]])[0]
             else:
-                Y, label = self.clf_models[f].predict([dscore])
+                # print(self.clf_models[f].predict([[dscore]]))
+                Y = self.clf_models[f].predict([[dscore]])[0]
 
             if Y:
                 c = AdaptiveContext(objs_remaining)
@@ -116,20 +140,49 @@ class IncrementalFeatureSelector:
         return None, None, None
 
     def predict(self, obj, context):
+        # NEW
         features = self.features
+
+        # type is added as a given
+        type = obj.get_feature_class_value("type")
+        output = type + ' '
+        context.init_spatial_model(self.sp_model)
 
         while True:
             feature, label, new_context = self._incremental_predict(obj, context, features)
+            # print(feature, label)
 
-            if not feature:
-                return output
+            if feature:
+                output += (label + ' ')
+                context = new_context
+                features = list(set(features) - set([feature]))
+                # print(features)
 
-            output += (label + ' ')
-            context = new_context
+            else:
+                break
+        print("Finished initial walkthrough with results: ", output)
+        if output == "marker red ":
+            # import pdb; pdb.set_trace()
+            pass
 
-            features = list(set(features) - set(feature))
-            if not features:
-                return output
+        # add type
+        type_context_objs, c = context.shared_features("type", type)
+        context = AdaptiveContext(type_context_objs)
+        context.init_spatial_model(self.sp_model)
+
+        for f in self.salience_ranking:
+            if context.env_size <= 1:
+                break
+
+            fval = context.get_obj_context_value(obj, f)
+            new_context_objs, count = context.shared_features(f, fval)
+
+            if count < context.env_size:
+                output += (fval + ' ')
+                context = AdaptiveContext(new_context_objs)
+                context.init_spatial_model(self.sp_model)
+
+        return output
 
     def print_function(self):
         for f in self.clf_models:
@@ -139,3 +192,21 @@ class IncrementalFeatureSelector:
             coeff, intercept = self.clf_models[f].get_learned_function()
             print("Coeff: ", coeff)
             print("Intercept: ", intercept)
+
+    def save_models(self, dest):
+        # rospy.loginfo("Saving models...")
+        print("Saving models...")
+        for f in self.clf_models:
+            file = path.join(dest, ("sgd_" + f + '_clf.pkl'))
+            self.clf_models[f].save_model(file)
+
+            scfile = path.join(dest, ("sgd_" + f + "_sclr.pkl"))
+            self.clf_models[f].save_scaler(scfile)
+
+    def load_models(self, dest):
+        for f in self.clf_models:
+            file = path.join(dest, ("sgd_" + f + '_clf.pkl'))
+            self.clf_models[f].load_model(file)
+
+            scfile = path.join(dest, ("sgd_" + f + "_sclr.pkl"))
+            self.clf_models[f].load_scaler(scfile)

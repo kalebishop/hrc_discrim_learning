@@ -22,7 +22,7 @@ if __name__ == "__main__":
     loc_model = ImageLocationLearner()
     loc_model.load_models(spatial_model_dest)
 
-    rank = ['size_relative', 'color', 'location']
+    rank = ['size_relative', 'color', 'material', 'location']
 
     feat_learner = IncrementalFeatureSelector(rank, loc_model, 0, 0)
 
