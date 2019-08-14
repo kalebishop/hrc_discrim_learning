@@ -1,36 +1,96 @@
-from hrc_discrim_learning.perceptron_selection import IncrementalFeatureSelector
+import unittest
 import json
+
 from hrc_discrim_learning.base import Object, AdaptiveContext
 from hrc_discrim_learning.spatial_learning import ImageLocationLearner
 
-def get_predictions():
-    with open("/ros/catkin_ws/src/hrc_discrim_learning/train/full_envs.json", 'r') as f:
-        all_envs = json.load(f)
+from hrc_discrim_learning.sgd_learner import SGDPrimeSelector
+from hrc_discrim_learning.incremental_selector import IncrementalSelector
+from hrc_discrim_learning.full_brevity import GreedyFBSelector, FullBrevSelector
 
-    test_env = all_envs["notepads, tablets, pen"]
 
-    env_obj_list = []
-    all_objs = test_env
-    for obj_id in all_objs:
-        features = all_objs[obj_id]
-        features['id'] = int(obj_id)
-        o = Object(features)
-        env_obj_list.append(o)
+# class TestSGDSelection(unittest.TestCase):
+#     def setUp(self):
+#         loc_model = ImageLocationLearner()
+#         loc_model.load_models("/ros/catkin_ws/src/hrc_discrim_learning/model/spatial")
+#
+#         features_ordered = ['size_relative', 'color', 'material', 'location']
+#         self.m = SGDPrimeSelector(features_ordered, loc_model, 0, 0)
+#
+#     def test_predictions(self):
+#         self.m.load_models("/ros/catkin_ws/src/hrc_discrim_learning/model/features")
+#
+#         with open("/ros/catkin_ws/src/hrc_discrim_learning/train/full_envs.json", 'r') as f:
+#             all_envs = json.load(f)
+#
+#         obj_dict = all_envs["differ by 1"]
+#         obj_list = [Object(obj_dict[id]) for id in obj_dict]
+#         c = AdaptiveContext(obj_list)
+#
+#         for o in obj_list:
+#             print(self.m.predict(o, c))
 
-    c = AdaptiveContext(env_obj_list, "notepads, tablets, pen")
+# class TestIncrementalSelection(unittest.TestCase):
+#     def setUp(self):
+#         loc_model = ImageLocationLearner()
+#         loc_model.load_models("/ros/catkin_ws/src/hrc_discrim_learning/model/spatial")
+#
+#         rank = ['color', 'material', 'size_relative', 'location']
+#
+#         self.m = IncrementalSelector(rank, loc_model, 0, 0)
+#
+#     def test_predictions(self):
+#         with open("/ros/catkin_ws/src/hrc_discrim_learning/train/full_envs.json", 'r') as f:
+#             all_envs = json.load(f)
+#
+#         obj_dict = all_envs["differ by 1"]
+#         obj_list = [Object(obj_dict[id]) for id in obj_dict]
+#         c = AdaptiveContext(obj_list)
+#
+#         for o in obj_list:
+#             print(self.m.predict(o, c))
 
-    # spatial_model_dest = rospy.get_param("hrc_discrim_learning/spatial_model")
-    loc_model = ImageLocationLearner()
-    loc_model.load_models("/ros/catkin_ws/src/hrc_discrim_learning/model/spatial")
+# class TestGreedyFBSelection(unittest.TestCase):
+#     def setUp(self):
+#         loc_model = ImageLocationLearner()
+#         loc_model.load_models("/ros/catkin_ws/src/hrc_discrim_learning/model/spatial")
+#
+#         rank = ['color', 'material', 'size_relative', 'location']
+#
+#         self.m = GreedyFBSelector(rank, loc_model, 0, 0)
+#
+#     def test_predictions(self):
+#         with open("/ros/catkin_ws/src/hrc_discrim_learning/train/full_envs.json", 'r') as f:
+#             all_envs = json.load(f)
+#
+#         obj_dict = all_envs["differ by 1"]
+#         obj_list = [Object(obj_dict[id]) for id in obj_dict]
+#         c = AdaptiveContext(obj_list)
+#
+#         for o in obj_list:
+#             print(self.m.predict(o, c))
 
-    learner = IncrementalFeatureSelector(loc_model)
-    learner.load_models("/ros/catkin_ws/src/hrc_discrim_learning/model/features")
+class TestFBSelection(unittest.TestCase):
+    def setUp(self):
+        loc_model = ImageLocationLearner()
+        loc_model.load_models("/ros/catkin_ws/src/hrc_discrim_learning/model/spatial")
 
-    for test_o in env_obj_list:
-        print(learner.predict(test_o, c))
+        rank = ['color', 'material', 'size_relative', 'location']
 
-    print(learner.learner.ppn.coef_)
-    print(learner.learner.ppn.intercept_)
+        self.m = FullBrevSelector(rank, loc_model, 0, 0)
+
+    def test_predictions(self):
+        with open("/ros/catkin_ws/src/hrc_discrim_learning/train/full_envs.json", 'r') as f:
+            all_envs = json.load(f)
+
+        obj_dict = all_envs["differ by 1"]
+        obj_list = [Object(obj_dict[id]) for id in obj_dict]
+        c = AdaptiveContext(obj_list)
+
+        for o in obj_list:
+            print(self.m.predict(o, c))
+
+
 
 if __name__ == '__main__':
-    get_predictions()
+    unittest.main()

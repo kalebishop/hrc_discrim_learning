@@ -1,5 +1,5 @@
 <launch>
-  <include file="$(find hrc_discrim_learning)/launch/basic_aruco.launch"/>
+  <include file="$(find hrc_discrim_learning)/launch/aruco_base.launch"/>
 
   <rosparam param="/perception/objs">
     0: {'color': 'yellow', 'material': 'paper', 'type': 'notepad', 'size_relative': 'small'}

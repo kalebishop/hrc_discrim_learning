@@ -38,14 +38,14 @@ class SGD:
     def load_scaler(self, file_dest):
         self.sc = joblib.load(file_dest)
 
-class IncrementalFeatureSelector:
+class SGDPrimeSelector:
     def __init__(self, features_ordered, spatial_model, size_model, color_model):
         # these all should be pretrained
         self.sp_model = spatial_model
         self.sz_model = size_model
         self.co_model = color_model
 
-        self.type = 'SGDMaster'
+        self.type = 'SGDPrime'
 
         self.features = features_ordered
         self.salience_ranking = features_ordered

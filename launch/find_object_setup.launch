@@ -1,0 +1,12 @@
+<launch>
+  <!-- <include file="$(find hrc_discrim_learning)/launch/display.launch"/> -->
+
+  <node name="find_object_2d" pkg="find_object_2d" type="find_object_2d">
+    <param name="subscribe_depth" value='true'/>
+
+    <remap from="rgb/image_rect_color" to="/kinect2/hd/image_color"/>
+    <remap from="depth_registered/image_raw" to="/kinect2/hd/image_depth_rect"/>
+    <remap from="depth_registered/camera_info" to="kinect2/hd/camera_info"/>
+  </node>
+
+</launch>
