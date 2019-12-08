@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<TRIAL ID="27" SPEAKER="823" AGE="21" GENDER="m" EXP="r23t" TURN="1" HEARER="858">
+
+  <CONTEXT ID="05o-t1n" COND="5" OVERLAP="o" DIR="n" SEQ="5" IMAGE="type1/05o-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="m" LANDMARK="u" SECOND-LANDMARK="h" STRING="boal cinza que esta a frente de um quadrado, que esta abaixo de outro quadrado" TRANSLATION="grey ball that is in front of a square, which is below another square" LENGTH="6" REL-COUNT="2" ANNOTATION="type-ball colour-grey in-front-of-u landmark-type-cube landmark-below-h second-landmark-type-cube ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="colour" VALUE="grey" />
+      <ATTRIBUTE NAME="landmark-below" VALUE="h" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="u" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="03f-t1r" COND="3" OVERLAP="f" DIR="r" SEQ="6" IMAGE="type1/03f-t1r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="m" LANDMARK="w" SECOND-LANDMARK="v" STRING="um cone cinza, ao lado de um quadrado pequeno, que esta ao lado de uma bola cinza" TRANSLATION="a grey cone, beside a small square, which is beside a grey ball" LENGTH="9" REL-COUNT="2" ANNOTATION="type-cone colour-grey near-w landmark-type-cube landmark-size-small landmark-near-v second-landmark-type-ball second-landmark-colour-grey xsecond-landmark-others-1 ">
+      <ATTRIBUTE NAME="type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="colour" VALUE="grey" />
+      <ATTRIBUTE NAME="second-landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="landmark-size" VALUE="small" />
+      <ATTRIBUTE NAME="near" VALUE="w" />
+      <ATTRIBUTE NAME="landmark-near" VALUE="v" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="06f-t2r" COND="6" OVERLAP="f" DIR="r" SEQ="7" IMAGE="type2/06f-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="h" LANDMARK="k" SECOND-LANDMARK="e" STRING="quadrado grande que está ao lado de uma bola cinza, ao lado de um triangulo" TRANSLATION="large square that is beside a grey ball beside a triangle" LENGTH="7" REL-COUNT="2" ANNOTATION="type-cube size-regular near-k landmark-type-ball landmark-colour-grey landmark-near-e second-landmark-type-cone ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="size" VALUE="regular" />
+      <ATTRIBUTE NAME="near" VALUE="k" />
+      <ATTRIBUTE NAME="landmark-near" VALUE="e" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="03o-t2n" COND="3" OVERLAP="o" DIR="n" SEQ="8" IMAGE="type2/03o-t2n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="m" LANDMARK="w" SECOND-LANDMARK="v" STRING="quadrado cinza grande, que está na frente de um triangulo pequeno, a frente de uma esfera cinza" TRANSLATION="large grey square, which is in front of a small triangle, in front of a grey sphere" LENGTH="10" REL-COUNT="2" ANNOTATION="type-cube colour-grey size-regular in-front-of-w landmark-type-cone landmark-size-small landmark-in-front-of-v second-landmark-type-ball second-landmark-colour-grey xsecond-landmark-others-1 ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="colour" VALUE="grey" />
+      <ATTRIBUTE NAME="second-landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="size" VALUE="regular" />
+      <ATTRIBUTE NAME="landmark-size" VALUE="small" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="w" />
+      <ATTRIBUTE NAME="landmark-in-front-of" VALUE="v" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="07o-t2n" COND="7" OVERLAP="o" DIR="n" SEQ="9" IMAGE="type2/07o-t2n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="i" LANDMARK="y" SECOND-LANDMARK="a" STRING="quadrado pequeno que está na frente de uma esfera cinza, na frente de um triangulo" TRANSLATION="small square that is in front of a grey sphere, in front of a triangle" LENGTH="7" REL-COUNT="2" ANNOTATION="type-cube size-small in-front-of-y landmark-type-ball landmark-colour-grey landmark-in-front-of-a second-landmark-type-cone ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="size" VALUE="small" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="y" />
+      <ATTRIBUTE NAME="landmark-in-front-of" VALUE="a" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="01f-t1n" COND="1" OVERLAP="f" DIR="n" SEQ="10" IMAGE="type1/01f-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="h" LANDMARK="w" SECOND-LANDMARK="v" STRING="triangulo cinza, ao lado de um quadrado grande, que esta ao lado de uma esfera cinza" TRANSLATION="grey triangle, beside a large square, which is beside a grey sphere" LENGTH="9" REL-COUNT="2" ANNOTATION="type-cone colour-grey near-w landmark-type-cube landmark-size-regular landmark-near-v second-landmark-type-ball second-landmark-colour-grey xsecond-landmark-others-1 ">
+      <ATTRIBUTE NAME="type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="colour" VALUE="grey" />
+      <ATTRIBUTE NAME="second-landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="landmark-size" VALUE="regular" />
+      <ATTRIBUTE NAME="near" VALUE="w" />
+      <ATTRIBUTE NAME="landmark-near" VALUE="v" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="08o-t1r" COND="8" OVERLAP="o" DIR="r" SEQ="11" IMAGE="type1/08o-t1r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="a" LANDMARK="u" STRING="esfera vermelha, que esta na frente de um quadrado grande" TRANSLATION="red sphere, which is in front of a large square" LENGTH="5" REL-COUNT="1" ANNOTATION="type-ball colour-red in-front-of-u landmark-type-cube landmark-size-regular ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="colour" VALUE="red" />
+      <ATTRIBUTE NAME="landmark-size" VALUE="regular" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="u" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="07f-t1n" COND="7" OVERLAP="f" DIR="n" SEQ="12" IMAGE="type1/07f-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="i" LANDMARK="y" SECOND-LANDMARK="a" STRING="esfera pequena, ao lado de um quadrado grande, que está ao lado de um triângulo cinza" TRANSLATION="small sphere, beside a large square, which is beside a grey triangle" LENGTH="9" REL-COUNT="2" ANNOTATION="type-ball size-small near-y landmark-type-cube landmark-size-regular landmark-near-a second-landmark-type-cone second-landmark-colour-grey xsecond-landmark-others-1 ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="second-landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="size" VALUE="small" />
+      <ATTRIBUTE NAME="landmark-size" VALUE="regular" />
+      <ATTRIBUTE NAME="near" VALUE="y" />
+      <ATTRIBUTE NAME="landmark-near" VALUE="a" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="05f-t2r" COND="5" OVERLAP="f" DIR="r" SEQ="13" IMAGE="type2/05f-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="m" LANDMARK="u" SECOND-LANDMARK="h" STRING="quadrado grande, abaixo de duas bolas cinzas" TRANSLATION="large square, below two grey balls" LENGTH="9" REL-COUNT="2" ANNOTATION="type-cube size-regular below-u landmark-type-ball landmark-colour-grey landmark-below-h second-landmark-type-ball second-landmark-colour-grey xsecond-landmark-others-1 ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="second-landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="size" VALUE="regular" />
+      <ATTRIBUTE NAME="below" VALUE="u" />
+      <ATTRIBUTE NAME="landmark-below" VALUE="h" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="06o-t2r" COND="6" OVERLAP="o" DIR="r" SEQ="14" IMAGE="type2/06o-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="h" LANDMARK="k" SECOND-LANDMARK="e" STRING="quadrado grande, na frente de uma esfera cinza, que está na frente de um cone" TRANSLATION="large square, in front of a grey sphere which is in front of a cone" LENGTH="7" REL-COUNT="2" ANNOTATION="type-cube size-regular in-front-of-k landmark-type-ball landmark-colour-grey landmark-in-front-of-e second-landmark-type-cone ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="size" VALUE="regular" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="k" />
+      <ATTRIBUTE NAME="landmark-in-front-of" VALUE="e" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="08f-t2n" COND="8" OVERLAP="f" DIR="n" SEQ="15" IMAGE="type2/08f-t2n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="a" LANDMARK="u" SECOND-LANDMARK="i" STRING="quadrado grande e vermelho, ao lado de uma esfera cinza, que está ao lado de um cone cinza" TRANSLATION="large red square, beside a grey sphere, which is beside a grey cone" LENGTH="10" REL-COUNT="2" ANNOTATION="type-cube colour-red size-regular near-u landmark-type-ball landmark-colour-grey landmark-near-i second-landmark-type-cone second-landmark-colour-grey xsecond-landmark-others-1 ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="colour" VALUE="red" />
+      <ATTRIBUTE NAME="landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="second-landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="size" VALUE="regular" />
+      <ATTRIBUTE NAME="near" VALUE="u" />
+      <ATTRIBUTE NAME="landmark-near" VALUE="i" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="02o-t2r" COND="2" OVERLAP="o" DIR="r" SEQ="16" IMAGE="type2/02o-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="o" LANDMARK="y" SECOND-LANDMARK="x" STRING="quadrado grande, na frente de um cone cinza, que esta na frente de uma esfera cinza" TRANSLATION="large square, in front of a grey cone, which is in front of a grey sphere" LENGTH="9" REL-COUNT="2" ANNOTATION="type-cube size-regular in-front-of-y landmark-type-cone landmark-colour-grey landmark-in-front-of-x second-landmark-type-ball second-landmark-colour-grey xsecond-landmark-others-1 ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="second-landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="size" VALUE="regular" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="y" />
+      <ATTRIBUTE NAME="landmark-in-front-of" VALUE="x" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="04o-t1n" COND="4" OVERLAP="o" DIR="n" SEQ="17" IMAGE="type1/04o-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="a" LANDMARK="w" SECOND-LANDMARK="v" STRING="cone cinza, na frente de um quadrado vermelho que está na frente de uma esfera" TRANSLATION="grey cone, in front of a red square that is in front of a sphere" LENGTH="7" REL-COUNT="2" ANNOTATION="type-cone colour-grey in-front-of-w landmark-type-cube landmark-colour-red landmark-in-front-of-v second-landmark-type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="colour" VALUE="grey" />
+      <ATTRIBUTE NAME="landmark-colour" VALUE="red" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="w" />
+      <ATTRIBUTE NAME="landmark-in-front-of" VALUE="v" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="02f-t2r" COND="2" OVERLAP="f" DIR="r" SEQ="18" IMAGE="type2/02f-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="o" LANDMARK="y" SECOND-LANDMARK="x" STRING="quadrado cinza, ao lado de um cone cinza, que esta ao lado de uma esfera cinza" TRANSLATION="grey square, beside a grey cone, which is beside a grey sphere" LENGTH="9" REL-COUNT="2" ANNOTATION="type-cube colour-grey near-y landmark-type-cone landmark-colour-grey landmark-near-x second-landmark-type-ball second-landmark-colour-grey xsecond-landmark-others-1 ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="colour" VALUE="grey" />
+      <ATTRIBUTE NAME="landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="second-landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="near" VALUE="y" />
+      <ATTRIBUTE NAME="landmark-near" VALUE="x" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="04f-t1n" COND="4" OVERLAP="f" DIR="n" SEQ="19" IMAGE="type1/04f-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="a" LANDMARK="w" SECOND-LANDMARK="v" STRING="cone cinza, que está ao lado do quadrado vermelho, que esta ao lado de uma esfera cinza" TRANSLATION="grey cone,, which is beside the red square, which is beside a grey sphere" LENGTH="9" REL-COUNT="2" ANNOTATION="type-cone colour-grey near-w landmark-type-cube landmark-colour-red landmark-near-v second-landmark-type-ball second-landmark-colour-grey xsecond-landmark-others-1 ">
+      <ATTRIBUTE NAME="type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="colour" VALUE="grey" />
+      <ATTRIBUTE NAME="landmark-colour" VALUE="red" />
+      <ATTRIBUTE NAME="second-landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="near" VALUE="w" />
+      <ATTRIBUTE NAME="landmark-near" VALUE="v" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="01o-t1r" COND="1" OVERLAP="o" DIR="r" SEQ="20" IMAGE="type1/01o-t1r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="h" LANDMARK="w" SECOND-LANDMARK="v" STRING="triângulo cinza, que está na frente de um quadrado grande, que esta na frente de uma esfera cinza" TRANSLATION="grey triangle, which is in front of a large square, which is in front of a grey sphere" LENGTH="9" REL-COUNT="2" ANNOTATION="type-cone colour-grey in-front-of-w landmark-type-cube landmark-size-regular landmark-in-front-of-v second-landmark-type-ball second-landmark-colour-grey xsecond-landmark-others-1 ">
+      <ATTRIBUTE NAME="type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="colour" VALUE="grey" />
+      <ATTRIBUTE NAME="second-landmark-colour" VALUE="grey" />
+      <ATTRIBUTE NAME="landmark-size" VALUE="regular" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="w" />
+      <ATTRIBUTE NAME="landmark-in-front-of" VALUE="v" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+</TRIAL>

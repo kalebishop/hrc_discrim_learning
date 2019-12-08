@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<TRIAL ID="31" SPEAKER="478" AGE="23" GENDER="m" EXP="a26b" TURN="1" HEARER="136">
+
+  <CONTEXT ID="03f-t2n" COND="3" OVERLAP="f" DIR="n" SEQ="8" IMAGE="type2/03f-t2n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="m" LANDMARK="w" STRING="cubo ao lado do menor cone" TRANSLATION="cube beside the smallest cone" LENGTH="4" REL-COUNT="1" ANNOTATION="type-cube near-w landmark-type-cone landmark-size-small ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-size" VALUE="small" />
+      <ATTRIBUTE NAME="near" VALUE="w" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="04f-t2r" COND="4" OVERLAP="f" DIR="r" SEQ="9" IMAGE="type2/04f-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="a" LANDMARK="w" STRING="cubo ao lado do cone vermelho" TRANSLATION="cube beside the red cone" LENGTH="4" REL-COUNT="1" ANNOTATION="type-cube near-w landmark-type-cone landmark-colour-red ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-colour" VALUE="red" />
+      <ATTRIBUTE NAME="near" VALUE="w" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="02o-t1r" COND="2" OVERLAP="o" DIR="r" SEQ="10" IMAGE="type1/02o-t1r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="o" LANDMARK="y" STRING="cone em frente ao cubo" TRANSLATION="cone in front of the cube" LENGTH="3" REL-COUNT="1" ANNOTATION="type-cone in-front-of-y landmark-type-cube ">
+      <ATTRIBUTE NAME="type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="y" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="06f-t1n" COND="6" OVERLAP="f" DIR="n" SEQ="11" IMAGE="type1/06f-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="h" STRING="circulo" TRANSLATION="circle" LENGTH="1" REL-COUNT="0" ANNOTATION="type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="08o-t2r" COND="8" OVERLAP="o" DIR="r" SEQ="12" IMAGE="type2/08o-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="a" STRING="cubo" TRANSLATION="cube" LENGTH="1" REL-COUNT="0" ANNOTATION="type-cube ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="05o-t1r" COND="5" OVERLAP="o" DIR="r" SEQ="13" IMAGE="type1/05o-t1r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="m" STRING="circulo" TRANSLATION="circle" LENGTH="1" REL-COUNT="0" ANNOTATION="type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="05f-t2r" COND="5" OVERLAP="f" DIR="r" SEQ="14" IMAGE="type2/05f-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="m" STRING="cubo" TRANSLATION="cube" LENGTH="1" REL-COUNT="0" ANNOTATION="type-cube ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="03o-t2n" COND="3" OVERLAP="o" DIR="n" SEQ="15" IMAGE="type2/03o-t2n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="m" LANDMARK="w" STRING="cubo em frente ao menor cone" TRANSLATION="cube in front of the smallest cone" LENGTH="4" REL-COUNT="1" ANNOTATION="type-cube in-front-of-w landmark-type-cone landmark-size-small ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-size" VALUE="small" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="w" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="08f-t2n" COND="8" OVERLAP="f" DIR="n" SEQ="16" IMAGE="type2/08f-t2n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="a" STRING="cubo" TRANSLATION="cube" LENGTH="1" REL-COUNT="0" ANNOTATION="type-cube ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="01f-t2n" COND="1" OVERLAP="f" DIR="n" SEQ="17" IMAGE="type2/01f-t2n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="h" LANDMARK="w" STRING="cubo ao lado do cone" TRANSLATION="cube beside the cone" LENGTH="3" REL-COUNT="1" ANNOTATION="type-cube near-w landmark-type-cone ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="near" VALUE="w" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="02f-t1r" COND="2" OVERLAP="f" DIR="r" SEQ="18" IMAGE="type1/02f-t1r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="o" LANDMARK="y" STRING="cone ao lado do cubo" TRANSLATION="cone beside the cube" LENGTH="3" REL-COUNT="1" ANNOTATION="type-cone near-y landmark-type-cube ">
+      <ATTRIBUTE NAME="type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="near" VALUE="y" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="07f-t1n" COND="7" OVERLAP="f" DIR="n" SEQ="19" IMAGE="type1/07f-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="i" STRING="circulo" TRANSLATION="circle" LENGTH="1" REL-COUNT="0" ANNOTATION="type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="01o-t2r" COND="1" OVERLAP="o" DIR="r" SEQ="20" IMAGE="type2/01o-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="h" LANDMARK="w" STRING="cubo em frente do cone" TRANSLATION="cube in front of the cone" LENGTH="3" REL-COUNT="1" ANNOTATION="type-cube in-front-of-w landmark-type-cone ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="w" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="06o-t1n" COND="6" OVERLAP="o" DIR="n" SEQ="21" IMAGE="type1/06o-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="h" STRING="circulo" TRANSLATION="circle" LENGTH="1" REL-COUNT="0" ANNOTATION="type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="04o-t1n" COND="4" OVERLAP="o" DIR="n" SEQ="22" IMAGE="type1/04o-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="a" LANDMARK="w" STRING="cone em frente do cubo vermelho" TRANSLATION="cone in front of the red cube" LENGTH="4" REL-COUNT="1" ANNOTATION="type-cone in-front-of-w landmark-type-cube landmark-colour-red ">
+      <ATTRIBUTE NAME="type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-colour" VALUE="red" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="w" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="07o-t1r" COND="7" OVERLAP="o" DIR="r" SEQ="23" IMAGE="type1/07o-t1r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="i" STRING="circulo" TRANSLATION="circle" LENGTH="1" REL-COUNT="0" ANNOTATION="type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+</TRIAL>

@@ -1,0 +1,31 @@
+{
+  "notepads, tablets, pen" : {
+    "0" : "yellow notepad",
+    "1" : "pink notepad on the left",
+    "2" : "large tablet",
+    "3" : "small tablet",
+    "4" : "black pen"
+  },
+
+  "notepad and 3 pens" : {
+    "1" : "notepad",
+    "4" : "black pen",
+    "5" : "right green pen",
+    "7" : "close green pen"
+  },
+
+  "1 of each" : {
+    "1" : "notepad",
+    "3" : "tablet",
+    "5" : "pen"
+  },
+
+  "differ by 1" : {
+    "0" : "small close red plastic marker",
+    "1" : "green marker",
+    "2" : "pen",
+    "3" : "red wood marker",
+    "4" : "far red plastic marker",
+    "5" : "large red plastic marker"
+  }
+}

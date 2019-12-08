@@ -51,11 +51,14 @@ catkin_python_setup()
 ## Generate messages in the 'msg' folder
  add_message_files(
    FILES
+   Object.msg
+   Workspace.msg
  )
 
 ## Generate services in the 'srv' folder
  add_service_files(
    FILES
+   SpeechRequest.srv
    TrainInput.srv
  )
 
@@ -71,7 +74,6 @@ generate_messages(
    DEPENDENCIES
    geometry_msgs
    std_msgs
-   hrc_discrim_learning
  )
 
 ################################################

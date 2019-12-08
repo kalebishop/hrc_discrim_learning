@@ -1,0 +1,178 @@
+{
+  "notepads, tablets, pen": {
+    "0": {
+      "color": "yellow",
+      "material": "paper",
+      "type": "notepad",
+      "size_relative": "small",
+      "location": [0, -1, 0],
+      "orientation" : [0, 0, 0, 0],
+      "description": "far"
+    },
+
+    "1" : {
+      "color": "pink",
+      "material": "paper",
+      "type": "notepad",
+      "size_relative": "small",
+      "location": [1, 0, 0],
+      "orientation": [0, 0, 0, 0],
+      "description" : "right"
+    },
+
+    "2" : {
+      "color": "black",
+      "material": "plastic",
+      "type": "tablet",
+      "size_relative": "large",
+      "location": [-1, 0, 0],
+      "orientation": [0, 0, 0, 0],
+      "description" : "left"
+    },
+
+    "3" : {
+      "color": "black",
+      "material": "glass",
+      "type": "tablet",
+      "size_relative": "small",
+      "location" : [0, 1, 0],
+      "orientation": [0, 0, 0, 0],
+      "description": "close"
+    },
+
+    "4" : {
+      "color": "black",
+      "material": "plastic",
+      "type": "pen",
+      "size_relative": "small",
+      "location": [0, -1, 0],
+      "orientation" : [0, 0, 0, 0],
+      "description": "far"
+    }
+  },
+
+  "notepad and 3 pens" : {
+    "1": {
+      "color": "yellow",
+      "material": "paper",
+      "type": "notepad",
+      "size_relative": "small",
+      "location": [0, -1, 0],
+      "orientation" : [0, 0, 0, 0],
+      "description": "far"
+    },
+
+    "4" : {
+      "color": "black",
+      "material": "plastic",
+      "type": "pen",
+      "size_relative": "small",
+      "location": [0, -1, 0],
+      "orientation" : [0, 0, 0, 0],
+      "description": "far"
+    },
+
+    "5" : {
+      "color": "green",
+      "material": "plastic",
+      "type": "pen",
+      "size_relative": "small",
+      "location": [2, 0, 0],
+      "orientation" : [0, 0, 0, 0],
+      "description": "right"
+    },
+
+    "7" : {
+      "color": "green",
+      "material": "plastic",
+      "type": "pen",
+      "size_relative": "small",
+      "location": [0, 2, 0],
+      "orientation" : [0, 0, 0, 0],
+      "description": "close"
+    }
+  },
+
+  "1 of each" : {
+    "1": {
+      "color": "yellow",
+      "material": "paper",
+      "type": "notepad",
+      "size_relative": "small",
+      "location": [0, -1, 0],
+      "orientation" : [0, 0, 0, 0],
+      "description": "far"
+    },
+
+    "3" : {
+      "color": "black",
+      "material": "glass",
+      "type": "tablet",
+      "size_relative": "small",
+      "location" : [0, 1, 0],
+      "orientation": [0, 0, 0, 0],
+      "description": "close"
+    },
+
+    "5" : {
+      "color": "green",
+      "material": "plastic",
+      "type": "pen",
+      "size_relative": "small",
+      "location": [2, 0, 0],
+      "orientation" : [0, 0, 0, 0],
+      "description": "right"
+    }
+  },
+
+  "differ by 1" : {
+    "0" : {
+      "color" : "red",
+      "material" : "plastic",
+      "type"  : "marker",
+      "size_relative" : "small",
+      "location" : [0, 1, 0],
+      "orientation" : []
+    },
+
+    "1" : {
+      "color" : "green",
+      "material" : "plastic",
+      "type" : "marker",
+      "size_relative" : "small",
+      "location" : [0, 1, 0]
+    },
+
+    "2" : {
+      "color" : "red",
+      "material" : "plastic",
+      "type" : "pen",
+      "size_relative" : "small",
+      "location" : [0, 1, 0]
+    },
+
+    "3" : {
+      "color" : "red",
+      "material" : "wood",
+      "type" : "marker",
+      "size_relative" : "small",
+      "location" : [0, 1, 0]
+    },
+
+    "4" : {
+      "color" : "red",
+      "material" : "plastic",
+      "type" : "marker",
+      "size_relative" : "small",
+      "location" : [0, -4, 0]
+    },
+
+    "5" : {
+      "color" : "red",
+      "material" : "plastic",
+      "type" : "marker",
+      "size_relative" : "large",
+      "location" : [0, 1, 0]
+    }
+  }
+}

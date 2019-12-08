@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<TRIAL ID="53" SPEAKER="671" AGE="19" GENDER="m" EXP="g42j" TURN="1" HEARER="647">
+
+  <CONTEXT ID="03f-t2r" COND="3" OVERLAP="f" DIR="r" SEQ="5" IMAGE="type2/03f-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="m" LANDMARK="w" SECOND-LANDMARK="v" STRING="cubo, coninho, esfera" TRANSLATION="cube, little cone, sphere" LENGTH="6" REL-COUNT="2" ANNOTATION="type-cube near-w landmark-type-cone landmark-size-small landmark-near-v second-landmark-type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="landmark-size" VALUE="small" />
+      <ATTRIBUTE NAME="near" VALUE="w" />
+      <ATTRIBUTE NAME="landmark-near" VALUE="v" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="04f-t1r" COND="4" OVERLAP="f" DIR="r" SEQ="7" IMAGE="type1/04f-t1r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="a" LANDMARK="w" SECOND-LANDMARK="v" STRING="cone que esta a esquerda do cubo que esta a esquerda da esfera" TRANSLATION="cone that is on the left side of the cube that is on the left side of the sphere" LENGTH="5" REL-COUNT="2" ANNOTATION="type-cone left-w landmark-type-cube landmark-left-v second-landmark-type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="left" VALUE="w" />
+      <ATTRIBUTE NAME="landmark-left" VALUE="v" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="08o-t2r" COND="8" OVERLAP="o" DIR="r" SEQ="8" IMAGE="type2/08o-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="a" STRING="cubo" TRANSLATION="cube" LENGTH="1" REL-COUNT="0" ANNOTATION="type-cube ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="02o-t2r" COND="2" OVERLAP="o" DIR="r" SEQ="9" IMAGE="type2/02o-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="o" LANDMARK="y" SECOND-LANDMARK="x" STRING="cubo que esta embaixo do cone e da esfera" TRANSLATION="cube that is below the cone and the sphere" LENGTH="5" REL-COUNT="2" ANNOTATION="type-cube in-front-of-y landmark-type-cone landmark-in-front-of-x second-landmark-type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="y" />
+      <ATTRIBUTE NAME="landmark-in-front-of" VALUE="x" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="03o-t2r" COND="3" OVERLAP="o" DIR="r" SEQ="10" IMAGE="type2/03o-t2r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="m" LANDMARK="w" SECOND-LANDMARK="v" STRING="cubo que esta embaixo do coninho e da esfera" TRANSLATION="cube that is below the little cone and the sphere" LENGTH="6" REL-COUNT="2" ANNOTATION="type-cube in-front-of-w landmark-type-cone landmark-size-small landmark-in-front-of-v second-landmark-type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="landmark-size" VALUE="small" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="w" />
+      <ATTRIBUTE NAME="landmark-in-front-of" VALUE="v" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="06o-t1r" COND="6" OVERLAP="o" DIR="r" SEQ="11" IMAGE="type1/06o-t1r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="h" STRING="esfera" TRANSLATION="sphere" LENGTH="1" REL-COUNT="0" ANNOTATION="type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="01o-t2n" COND="1" OVERLAP="o" DIR="n" SEQ="12" IMAGE="type2/01o-t2n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="h" LANDMARK="w" SECOND-LANDMARK="v" STRING="cubo que esta embaixo do cone que esta embaixo da esfera" TRANSLATION="cube that is below the cone that is below the sphere" LENGTH="5" REL-COUNT="2" ANNOTATION="type-cube in-front-of-w landmark-type-cone landmark-in-front-of-v second-landmark-type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cone" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="w" />
+      <ATTRIBUTE NAME="landmark-in-front-of" VALUE="v" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="07o-t2n" COND="7" OVERLAP="o" DIR="n" SEQ="13" IMAGE="type2/07o-t2n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="i" STRING="cubinho" TRANSLATION="small cube" LENGTH="2" REL-COUNT="0" ANNOTATION="type-cube size-small ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+      <ATTRIBUTE NAME="size" VALUE="small" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="05o-t1r" COND="5" OVERLAP="o" DIR="r" SEQ="14" IMAGE="type1/05o-t1r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="m" STRING="esfera" TRANSLATION="sphere" LENGTH="1" REL-COUNT="0" ANNOTATION="type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="05f-t1n" COND="5" OVERLAP="f" DIR="n" SEQ="15" IMAGE="type1/05f-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="m" STRING="esfera" TRANSLATION="sphere" LENGTH="1" REL-COUNT="0" ANNOTATION="type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="08f-t2n" COND="8" OVERLAP="f" DIR="n" SEQ="16" IMAGE="type2/08f-t2n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="a" STRING="cubo" TRANSLATION="cube" LENGTH="1" REL-COUNT="0" ANNOTATION="type-cube ">
+      <ATTRIBUTE NAME="type" VALUE="cube" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="04o-t1n" COND="4" OVERLAP="o" DIR="n" SEQ="17" IMAGE="type1/04o-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="a" LANDMARK="w" SECOND-LANDMARK="v" STRING="cone que esta embaixo do cubo que esta embaixo da esfera" TRANSLATION="cone that is below the cube that is below the sphere" LENGTH="5" REL-COUNT="2" ANNOTATION="type-cone in-front-of-w landmark-type-cube landmark-in-front-of-v second-landmark-type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="second-landmark-type" VALUE="ball" />
+      <ATTRIBUTE NAME="in-front-of" VALUE="w" />
+      <ATTRIBUTE NAME="landmark-in-front-of" VALUE="v" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="02f-t1n" COND="2" OVERLAP="f" DIR="n" SEQ="18" IMAGE="type1/02f-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="o" LANDMARK="y" STRING="cone que esta a direita do cubo" TRANSLATION="cone that is on the right side of the cube" LENGTH="3" REL-COUNT="1" ANNOTATION="type-cone right-y landmark-type-cube ">
+      <ATTRIBUTE NAME="type" VALUE="cone" />
+      <ATTRIBUTE NAME="landmark-type" VALUE="cube" />
+      <ATTRIBUTE NAME="right" VALUE="y" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="06f-t1r" COND="6" OVERLAP="f" DIR="r" SEQ="19" IMAGE="type1/06f-t1r" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="h" STRING="esfera" TRANSLATION="sphere" LENGTH="1" REL-COUNT="0" ANNOTATION="type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+  <CONTEXT ID="07f-t1n" COND="7" OVERLAP="f" DIR="n" SEQ="20" IMAGE="type1/07f-t1n" PREVIOUS="0">
+    <ATTRIBUTE-SET TARGET="i" STRING="esfera" TRANSLATION="sphere" LENGTH="1" REL-COUNT="0" ANNOTATION="type-ball ">
+      <ATTRIBUTE NAME="type" VALUE="ball" />
+    </ATTRIBUTE-SET>
+  </CONTEXT>
+
+</TRIAL>
