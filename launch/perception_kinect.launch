@@ -1,6 +1,5 @@
 <launch>
   <!-- INPUT ARGUMENTS -->
-  <arg name="image_topic" default="image"/>
   <arg name="resolution"    default="qhd" />
 	<arg name="object_prefix" default="object"/>
 	<arg name="objects_path"  default=""/>
@@ -8,11 +7,10 @@
 	<arg name="settings_path" default="~/.ros/find_object_2d.ini"/>
 
   <!-- LAUNCH -->
-  <!-- start kinect2 here - probably include launch file from elsewhere -->
-  <!-- start bridge -->
-  <include file="$(find kinect2_bridge)/launch/kinect2_bridge.launch"/>
+  <!-- Launch Azure kinect ros driver for kinectv2 -->
+  <include file="$(find azure_kinect_ros_driver)/launch/driver.launch"/>
 
-  <!-- start object detection -->
+  <!-- start object detection via find_object_2d -->
   <node name="find_object_3d" pkg="find_object_2d" type="find_object_2d" output="screen">
 		<param name="gui" value="$(arg gui)" type="bool"/>
 		<param name="settings_path" value="$(arg settings_path)" type="str"/>
@@ -25,8 +23,4 @@
 		<remap from="depth_registered/image_raw" to="/kinect2/$(arg resolution)/image_depth_rect"/>
 		<remap from="depth_registered/camera_info" to="/kinect2/$(arg resolution)/camera_info"/>
 	</node>
-
-  <!-- start object detection processing -->
-  <node pkg="hrc_discrim_learning" type="object_detection.py" name="object_detection" respawn="false" output="screen"/>
-
 </launch>
