@@ -64,16 +64,6 @@ def write_csv_from_dict(dict, output_filename, header_fields=[]):
 def get_usage_counts_per_pid():
     raise NotImplementedError
 
-def extract_stim_data(stim_file):
-    # TODO finish
-    raise NotImplementedError
-    pass
-
-
-    with open(stim_file, newline='') as stim_file:
-        csvreader = csv.reader(stim_file)
-        # TODO finish
-
 def main():
     # pass
     dict = get_usage_counts_per_stim()

@@ -6,7 +6,7 @@ Documentation goes here
 def process_workspace_from_msg(msg):
     new_workspace = {}
     for object in msg:
-        o = Object(msg))
+        o = Object(msg)
         id = msg.id
         new_workspace[id] = o
     return new_workspace
@@ -16,10 +16,10 @@ class Object:
         if msg:
             self.features = {
                 # "id" = msg.id            # object id
-                "type" = msg.type        # object type (block, screwdriver, etc)
-                "color" = msg.color      # object color as RGBA
-                "dims" = (msg.x_dim, msg.y_dim, msg.z_dim) # object dimentions (estimated)
-                "pose" = msg.pose.position # object pose (estimated) as Position msg (xyz)
+                "type": msg.type,        # object type (block, screwdriver, etc)
+                "color": msg.color,      # object color as RGBA
+                "dims": (msg.x_dim, msg.y_dim, msg.z_dim), # object dimentions (estimated)
+                "pose": msg.pose.position # object pose (estimated) as Position msg (xyz)
             }
 
     def from_dict(self, dict):

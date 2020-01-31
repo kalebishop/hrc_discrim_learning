@@ -2,10 +2,10 @@
 import rospy
 import xml.etree.ElementTree as et
 
-# from hrc_discrim_learning.base_classes import Object, Context
+from hrc_discrim_learning.base_classes import Object, Context
 
 class CorpusTraining:
-    def __init__(self, filename):
+    def __init__(self):
         self.workspaces = {}
 
     def parse_workspace_data_from_xml(self, filename):
