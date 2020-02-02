@@ -1,4 +1,5 @@
 import math
+import statistics
 
 """
 Documentation goes here
@@ -32,6 +33,7 @@ class Context:
     def __init__(self, objs, name=""):
         self.env = objs
         self.env_size = len(objs)
+        self._intialize_feature_distributions()
 
         # self.sp_clf = spatial_model
 
@@ -53,6 +55,26 @@ class Context:
         #     return self.sp_clf.predict(obj.get_feature_val("location"), self)
         # else:
         return obj.get_feature_val(feature)
+
+    def _intialize_feature_distributions(self):
+        # grab size and dimensions
+        all_sizes = []
+        all_ratios = []
+        for o in self.env:
+            dims = [float(d) for d in o.get_feature_val("dimensions")]
+            sz = 1.0
+            for d in dims:
+                sz *= d
+            all_sizes.append(sz)
+            all_ratios.append(dims[0]/dims[1])
+
+
+        self.size_xbar = statistics.mean(all_sizes)
+        self.size_sd = statistics.stdev(all_sizes, self.size_xbar)
+
+        self.dim_xbar = statistics.mean(all_ratios)
+        self.dim_sd = statistics.stdev(all_ratios, self.dim_xbar)
+
 
     # def _initialize_workspace_location_info(self):
     #     # should all this be calculated dynamically?

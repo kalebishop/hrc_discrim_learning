@@ -117,8 +117,7 @@
       <hsv>0, 100, 90</hsv>
       <location>
         <x>471</x>
-        <y>452</y> </location> </item>
-  </workspace>
+        <y>452</y> </location> </item> </workspace>
 
   <workspace id="Q4.2">
     <item id="0">
@@ -227,10 +226,6 @@
         <y>59</y> </dimensions>
       <hsv>264, 37, 67</hsv>
       <location>
-
-
-
-
         <x>345</x>
         <y>396</y> </location> </item>
     <item id="KEY">
@@ -241,7 +236,7 @@
       <hsv>0, 100, 90</hsv>
       <location>
         <x>472</x>
-        <y>435</y> </location> </item>
+        <y>435</y> </location> </item> </workspace>
 
   <workspace id="Q5.2">
     <item id="0">

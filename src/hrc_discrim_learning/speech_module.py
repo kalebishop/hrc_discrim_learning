@@ -1,5 +1,5 @@
 # import opencv2 as cv\
-import numpy as np
+import statistics
 
 class SpeechModule:
     def __init__(self, w2c_filename):
@@ -12,12 +12,13 @@ class SpeechModule:
         with open(w2c_filename) as rgb_file:
             for line in rgb_file:
                 vals = line.split(' ')
-                rgb = tuple(vals[0:3])
-                pdist = tuple(vals[3:])
+                rgb = tuple([float(v) for v in vals[0:3]])
+                pdist = tuple([float(v) for v in vals[3:14]])
                 color_dict[rgb] = pdist
         return color_dict
 
-    def label_color(self, rgb):
+    def label_color(self, obj):
+        rgb = obj.get_feature_val("rgb")
         lookup_rgb = []
         for clr in rgb:
             x = round((clr - 7.5) / 16)
@@ -26,38 +27,68 @@ class SpeechModule:
                 clr_approx = 7.5
             lookup_rgb.append(clr_approx)
 
+        print(lookup_rgb)
+
         # look up probability distribution of each color label in table
         try:
-            pdist = self.color_labels(tuple(lookup_rgb))
+            pdist = self.color_labels[tuple(lookup_rgb)]
         except KeyError:
             print("RGB lookup error! Check speech_module.py")
             return
 
+        pdist = list(pdist)
+
         # return top 2 colors and associated probabilities
         val1 = max(pdist)
-        ind1 = index(val1)
+        ind1 = pdist.index(val1)
         pdist.pop(ind1)
         val2 = max(pdist)
-        ind2 = index(val2)
+        ind2 = pdist.index(val2)
 
         # get color labels
-        l1 = self.color_terms[ind1-3]
-        l2 = self.color_terms[ind2-3]
+        l1 = self.color_terms[ind1]
+        l2 = self.color_terms[ind2]
 
-        return (l1, val1), (l2, val2)
-
-    def _cvt_color_to_cv_format(self, hsv_tuple):
-        h = hsv_tuple[0] / 2
-        s = hsv_tuple[1] / 100 * 255
-        v = hsv_tuple[2] / 100 * 255
-        return (h, s, v)
+        return (l1, ind1, val1), (l2, ind2, val2)
 
     def label_size(self, obj, context):
-        raise NotImplementedError
-        # TODO finish
-
         # estimate volume based on dimensions
         dims = obj.get_feature_val("dimensions")
         target_size = 1
         for d in dims:
             target_size *= d
+
+        # return: best label and # of stdevs from the mean in that direction
+        if target_size >= context.size_xbar:
+            label = "big"
+        else:
+            label = "small"
+
+        diff = abs((target_size - context.size_xbar)/context.size_sd)
+
+        return label, diff
+
+    def label_dimensionality(self, obj, context):
+        # operates on same principle as label_size - should definitely
+        # be made more nuanced if possible
+        x, y = obj.get_feature_val("dimensions")
+        target_ratio = max(x/y, y/x)
+
+        # return: best label and # of stdevs from the mean in that direction
+        if target_ratio >= context.dim_xbar:
+            label = "long"
+        else:
+            label = "short"
+
+        diff = abs((target_ratio - context.dim_xbar)/context.dim_sd)
+
+        return label, diff
+
+if __name__ == "__main__":
+    # TEST COLOR LABELLING FOR GIVEN RGB
+    w2c = "w2c_4096.txt"
+    sm = SpeechModule(w2c)
+    # print(sm.color_labels)
+
+    rgb = (167.500000, 7.500000, 7.500000)
+    print(sm.label_color(rgb))
