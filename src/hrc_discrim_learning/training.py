@@ -16,6 +16,17 @@ class CorpusTraining:
         self.reg = REG()
         self.workspaces = {}
 
+    def train(self, xml_workspace_filename, csv_responses_filename):
+        self.parse_workspace_data_from_xml(xml_workspace_filename)
+        responses = self.parse_responses_from_csv(csv_responses_filename)
+
+        clr_x, sz_x, dim_x = self.train_assemble_x()
+        clr_y, sz_y, dim_y = self.process_all_outputs(responses)
+
+        self.reg.train_model("color", clr_x, clr_y)
+        self.reg.train_model("size", sz_x, sz_y)
+        self.reg.train_model("dim", dim_x, dim_y)
+
     def parse_workspace_data_from_xml(self, filename):
         self.tree = et.parse(filename)
         self.root = self.tree.getroot() # data (elements are workspaces)
@@ -56,19 +67,27 @@ class CorpusTraining:
 
             self.workspaces[id] = (key_item, obj_lst)
 
-    def assemble_x_for_q(self):
-        color_x = []
-        size_x = []
-        dim_x = []
+    def train_assemble_x(self):
+        color_X = []
+        size_X = []
+        dim_X = []
         for ws in self.workspaces:
             obj, context = self.workspaces[ws]
-            clr_label, clr_score, clr_data, clr_kept = self.reg.get_model_input("color", obj, context)
-            sz_label, sz_score, sz_data, sz_kept = self.reg.get_model_input("size", obj, context)
-            dim_label, dim_score, dim_data, dim_kept = self.reg.get_model_input("dim", obj, context)
+            clr, sz, dim = self.assemble_x_for_q(obj, context)
+            color_X.append(clr)
+            size_X.append(sz)
+            dim_X.append(dim)
+        return color_X, size_X, dim_X
 
-            color_x.append((clr_score, clr_data))
-            size_x.append((sz_score, sz_data))
-            dim_x.append((dim_score, dim_data))
+    def assemble_x_for_q(self, obj, context):
+        clr_label, clr_score, clr_data, clr_kept = self.reg.get_model_input("color", obj, context)
+        sz_label, sz_score, sz_data, sz_kept = self.reg.get_model_input("size", obj, context)
+        dim_label, dim_score, dim_data, dim_kept = self.reg.get_model_input("dim", obj, context)
+
+        color_x = (clr_score, clr_data)
+        size_x = (sz_score, sz_data)
+        dim_x = (dim_score, dim_data)
+
         return color_x, size_x, dim_x
 
     def test_labeling(self):

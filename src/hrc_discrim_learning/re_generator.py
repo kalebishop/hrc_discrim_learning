@@ -2,8 +2,31 @@
 from sklearn.svm import SVR
 import numpy as np
 import copy
+import pickle
 
 from hrc_discrim_learning.speech_module import SpeechModule
+
+class SpeechLearner:
+    def __init__(self, label):
+        # TODO tune
+        self.label = label
+        self.clf = SVR(kernel='linear', C=100, gamma='auto', epsilon=.1)
+
+    def train(self, X, y):
+        self.clf.fit(X, y)
+
+    def predict(self, X):
+        return self.clf.predict(X)
+
+    def plot_learned_function(self, data):
+        # TODO implement
+        raise NotImplementedError
+
+    def save_model(self, filename="/ros/catkin_ws/src/workspace_speech/models/speech/svm_" + self.label + ".pkl"):
+        pickle.dump(model, open(filename, 'wb'))
+
+    def load_model(self, filename="/ros/catkin_ws/src/workspace_speech/models/speech/svm_" + self.label + ".pkl"):
+        self.clf = pickle.load(open(filename, 'rb'))
 
 class REG:
     def __init__(self):
@@ -13,14 +36,22 @@ class REG:
 
         self.features = ["color", "size", "dimensions"]
 
+        self.models = {"color": SpeechLearner("color"),
+                        "size": SpeechLearner("size"),
+                        "dimensions": SpeechLearner("dim")}
+
+    def train_model(self, feature, x, y):
+        model = self.modles[feature]
+        model.train(x, y)
+
     def _generate_single_output(self, object, context, feature_set):
         pscore_dict = {}
         for feature in feature_set:
             label, score, data, kept_objects = self.get_model_input(feature, object, context)
             X = [score, data]
             # UNCOMMENT WHEN MODEL IS IN PLACE
-            # pscore = self.models[feature].predict([X])
-            # pscore_dict[(feature, label)] = pscore
+            pscore = self.models[feature].predict([X])
+            pscore_dict[(feature, label)] = pscore
 
         # TODO finish
         best_candidate = max(pscore_dict.keys(), key=lambda x: pscore_dict[x])
@@ -32,7 +63,6 @@ class REG:
     def generate_output(self, object, context):
         # context should include object
         # TODO finish with ML model
-        raise NotImplementedError
         output = ""
 
         # first: boil down to type

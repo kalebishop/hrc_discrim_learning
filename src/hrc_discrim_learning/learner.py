@@ -5,6 +5,10 @@ import matplotlib.pyplot as plt
 import pickle
 import rospy
 
+"""
+NOW OUTDATED - SEE re_generator.py ************************************
+"""
+
 class SpeechLearner:
     def __init__(self, label):
         # TODO tune
