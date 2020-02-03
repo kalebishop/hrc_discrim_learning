@@ -12,20 +12,38 @@ class REG:
     def get_model_input(self, feature, object, context):
         # context should include object
         label, data = self.sm.label_feature(object, context, feature)
+        if feature == "color":
+            score, kept_objects = self.elim_objects_color(context, label)
+        else:
+            score, kept_objects = self.elim_objects_gradable(context, feature, label, data)
 
-        # TODO finish
-        raise NotImplementedError
+        return label, score, data, kept_objects
 
-    def elim_objects_color(self, object, context):
-        # TODO implement
-        # we want to eliminate everything that the term can NOT apply to
-        raise NotImplementedError
+    def elim_objects_color(self, context, label):
+        # we want to eliminate everything that the term label can NOT apply to
+        score = 0
+        kept_objects = []
+        for o in context.env:
+            this_label, data = self.sm.label_feature(o, context, "color")
+            if label == this_label:
+                kept_objects.append(o)
+            else:
+                score += 1
+
         return score, kept_objects
 
-    def elim_objects_gradable(self, context, feature, label):
-        # TODO implement
+    def elim_objects_gradable(self, context, feature, label, label_score):
         # we want to eliminate everything that the term can NOT apply to
-        raise NotImplementedError
+        # that is, everything that the term fits LESS well than the target object
+        score = 0
+        kept_objects = []
+        for o in context.env:
+            this_label, data = self.sm.label_feature(o, context, feature)
+            if this_label == label and data >= label_score:
+                kept_objects.append(o)
+            else:
+                score += 1
+
         return score, kept_objects
 
     def update_context(self, kept_objects):

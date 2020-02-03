@@ -6,12 +6,14 @@ from colorsys import hsv_to_rgb
 
 from hrc_discrim_learning.base_classes import Object, Context
 from hrc_discrim_learning.speech_module import SpeechModule
+from hrc_discrim_learning.re_generator import REG
 
 class CorpusTraining:
     def __init__(self):
         self.Theta = p_threshold
         w2c = "data/w2c_4096.txt"
         self.sm = SpeechModule(w2c)
+        self.reg = REG()
         self.workspaces = {}
 
     def parse_workspace_data_from_xml(self, filename):
@@ -49,14 +51,25 @@ class CorpusTraining:
                 o.from_dict(feature_dict)
                 if item_id == "KEY":
                     key_item = o
-                else:
-                    obj_lst.append(o)
+
+                obj_lst.append(o)
 
             self.workspaces[id] = (key_item, obj_lst)
 
     def assemble_x_for_q(self):
-        ws = self.workspaces
-        # TODO finish
+        color_x = []
+        size_x = []
+        dim_x = []
+        for ws in self.workspaces:
+            obj, context = self.workspaces[ws]
+            clr_label, clr_score, clr_data, clr_kept = self.reg.get_model_input("color", obj, context)
+            sz_label, sz_score, sz_data, sz_kept = self.reg.get_model_input("size", obj, context)
+            dim_label, dim_score, dim_data, dim_kept = self.reg.get_model_input("dim", obj, context)
+
+            color_x.append((clr_score, clr_data))
+            size_x.append((sz_score, sz_data))
+            dim_x.append((dim_score, dim_data))
+        return color_x, size_x, dim_x
 
     def test_labeling(self):
         # show usage
