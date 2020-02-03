@@ -21,10 +21,10 @@ class SpeechLearner:
         # TODO implement
         raise NotImplementedError
 
-    def save_model(self, filename="/home/kaleb/ros/catkin_ws/src/workspace_speech/models/speech/svm_" + self.label + ".pkl"):
+    def save_model(self, filename="/ros/catkin_ws/src/workspace_speech/models/speech/svm_" + self.label + ".pkl"):
         pickle.dump(model, open(filename, 'wb'))
 
-    def load_model(self, filename="/home/kaleb/ros/catkin_ws/src/workspace_speech/models/speech/svm_" + self.label + ".pkl"):
+    def load_model(self, filename="/ros/catkin_ws/src/workspace_speech/models/speech/svm_" + self.label + ".pkl"):
         self.clf = pickle.load(open(filename, 'rb'))
 
 class FullSpeechPredictor:

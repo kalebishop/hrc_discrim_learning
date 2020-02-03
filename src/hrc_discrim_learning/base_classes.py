@@ -14,14 +14,16 @@ def process_workspace_from_msg(msg):
 
 class Object:
     def __init__(self, msg=None):
-        if msg:
-            self.features = {
-                # "id" = msg.id            # object id
-                "type": msg.type,        # object type (block, screwdriver, etc)
-                "color": msg.color,      # object color as RGBA
-                "dims": (msg.x_dim, msg.y_dim, msg.z_dim), # object dimentions (estimated)
-                "pose": msg.pose.position # object pose (estimated) as Position msg (xyz)
-            }
+        # TODO update commented section
+        pass
+        # if msg:
+        #     self.features = {
+        #         # "id" = msg.id            # object id
+        #         "type": msg.type,        # object type (block, screwdriver, etc)
+        #         "color": msg.color,      # object color as RGBA
+        #         "dims": (msg.x_dim, msg.y_dim, msg.z_dim), # object dimentions (estimated)
+        #         "pose": msg.pose.position # object pose (estimated) as Position msg (xyz)
+        #     }
 
     def from_dict(self, dict):
         self.features = dict
@@ -40,15 +42,21 @@ class Context:
     def object_lookup(self, id):
         return self.env[id]
 
-    def feature_match(self, feature, value):
-        matches = {}
-        count = 0
-        for id in self.env:
-            obj = self.env[id]
-            if self.get_obj_label(obj, feature) == value:
-                matches[id] = obj
-                count += 1
-        return matches, count
+    def return_all_feature_vals(self, feature):
+        res = []
+        for obj in self.env:
+            res.append(obj.get_feature_val(feature))
+        return res
+        
+    # def feature_match(self, feature, value):
+    #     matches = {}
+    #     count = 0
+    #     for id in self.env:
+    #         obj = self.env[id]
+    #         if self.get_obj_label(obj, feature) == value:
+    #             matches[id] = obj
+    #             count += 1
+    #     return matches, count
 
     def get_obj_label(self, obj, feature):
         # if feature == "location":
@@ -67,7 +75,6 @@ class Context:
                 sz *= d
             all_sizes.append(sz)
             all_ratios.append(dims[0]/dims[1])
-
 
         self.size_xbar = statistics.mean(all_sizes)
         self.size_sd = statistics.stdev(all_sizes, self.size_xbar)
