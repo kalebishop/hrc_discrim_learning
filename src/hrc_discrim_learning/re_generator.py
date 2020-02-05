@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-from sklearn.svm import SVR
+# TODO uncomment
+# from sklearn.svm import SVR
 import numpy as np
 import copy
 import pickle
@@ -10,7 +11,7 @@ class SpeechLearner:
     def __init__(self, label):
         # TODO tune
         self.label = label
-        self.clf = SVR(kernel='linear', C=100, gamma='auto', epsilon=.1)
+        # self.clf = SVR(kernel='linear', C=100, gamma='auto', epsilon=.1)
 
     def train(self, X, y):
         self.clf.fit(X, y)
@@ -21,11 +22,16 @@ class SpeechLearner:
     def plot_learned_function(self, data):
         # TODO implement
         raise NotImplementedError
+        pass
 
-    def save_model(self, filename="/ros/catkin_ws/src/workspace_speech/models/speech/svm_" + self.label + ".pkl"):
+    def save_model(self, filename=""):
+        if not filename:
+            filename = "/ros/catkin_ws/src/workspace_speech/models/speech/svm_" + self.label + ".pkl"
         pickle.dump(model, open(filename, 'wb'))
 
-    def load_model(self, filename="/ros/catkin_ws/src/workspace_speech/models/speech/svm_" + self.label + ".pkl"):
+    def load_model(self, filename=""):
+        if not filename:
+            filename = "/ros/catkin_ws/src/workspace_speech/models/speech/svm_" + self.label + ".pkl"
         self.clf = pickle.load(open(filename, 'rb'))
 
 class REG:
@@ -35,10 +41,10 @@ class REG:
         self.theta = 0.5
 
         self.features = ["color", "size", "dimensions"]
-
-        self.models = {"color": SpeechLearner("color"),
-                        "size": SpeechLearner("size"),
-                        "dimensions": SpeechLearner("dim")}
+        #
+        # self.models = {"color": SpeechLearner("color"),
+        #                 "size": SpeechLearner("size"),
+        #                 "dimensions": SpeechLearner("dim")}
 
     def train_model(self, feature, x, y):
         model = self.modles[feature]

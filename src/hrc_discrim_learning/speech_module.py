@@ -104,17 +104,21 @@ class SpeechModule:
     def process_speech_string(self, string):
         # split into tokens
         tokens = [x.lower() for x in string.split(' ')]
-        id = [0, 0, 0]
+        id_tokens = []
 
-        # TODO: make more robust, maybe use REs
+        labels = []
         for t in tokens:
             if t in self.COLOR:
-                id[self.COLOR_I] = 1
+                id_tokens.append(self.COLOR_I)
+                labels.append(t)
             elif t in self.SIZE:
-                id[self.SIZE_I] = 1
+                id_tokens.append(self.SIZE_I)
+                labels.append(t)
             elif t in self.DIM:
-                id[self.DIM_I] = 1
-        return id
+                id_tokens.append(self.DIM_I)
+                labels.append(t)
+
+        return labels, id_tokens
 
 if __name__ == "__main__":
     # TEST COLOR LABELLING FOR GIVEN RGB
