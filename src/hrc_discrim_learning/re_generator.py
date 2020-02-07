@@ -41,10 +41,10 @@ class REG:
         self.theta = 0.5
 
         self.features = ["color", "size", "dimensions"]
-        #
-        # self.models = {"color": SpeechLearner("color"),
-        #                 "size": SpeechLearner("size"),
-        #                 "dimensions": SpeechLearner("dim")}
+
+        self.models = {"color": SpeechLearner("color"),
+                        "size": SpeechLearner("size"),
+                        "dimensions": SpeechLearner("dim")}
 
     def train_model(self, feature, x, y):
         model = self.modles[feature]

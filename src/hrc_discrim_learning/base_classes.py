@@ -29,7 +29,10 @@ class Object:
         self.features = dict
 
     def get_feature_val(self, feature):
-        return self.features[feature]
+        if feature == "color":
+            return self.features["rgb"]
+        else:
+            return self.features[feature]
 
 class Context:
     def __init__(self, objs, name=""):
@@ -47,7 +50,7 @@ class Context:
         for obj in self.env:
             res.append(obj.get_feature_val(feature))
         return res
-        
+
     # def feature_match(self, feature, value):
     #     matches = {}
     #     count = 0

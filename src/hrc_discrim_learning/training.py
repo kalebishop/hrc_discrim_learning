@@ -17,14 +17,19 @@ class CorpusTraining:
         self.reg = REG()
         self.workspaces = {}
 
-    def train(self, xml_workspace_filename, csv_responses_filename):
-
+    def get_train_x_y(self, xml_workspace_filename, csv_responses_filename):
         self.parse_workspace_data_from_xml(xml_workspace_filename)
         responses = self.parse_responses_from_csv(csv_responses_filename)
         tokenized_responses = self.process_all_outputs(responses)
 
-        clr_x, sz_x, dim_x = self.assemble_x(tokenized_responses)
-        clr_y, sz_y, dim_y = self.assemble_Y(tokenized_responses)
+        feature_inputs = self.assemble_x(tokenized_responses)
+        feature_outputs = self.assemble_Y(tokenized_responses)
+
+        return feature_inputs, feature_outputs
+
+    def train(self, feature_inputs, feature_outputs):
+        clr_x, sz_x, dim_x = feature_inputs
+        clr_y, sz_y, dim_y = feature_outputs
 
         self.reg.train_model("color", clr_x, clr_y)
         self.reg.train_model("size", sz_x, sz_y)
@@ -68,7 +73,7 @@ class CorpusTraining:
 
                 obj_lst.append(o)
 
-            self.workspaces[id] = (key_item, obj_lst)
+            self.workspaces[id] = (key_item, Context(obj_lst))
 
     def assemble_x_for_q(self, obj, context, tokenized_response):
         labels, tokens = tokenized_response
@@ -95,6 +100,15 @@ class CorpusTraining:
                 kept = dim_kept_objects
 
             context = self.reg.update_context(kept)
+
+        # you'll always have a last one pre-noun
+        _, clr_score, clr_data, clr_kept_objects = self.reg.get_model_input("color", obj, context)
+        _, sz_score, sz_data, sz_kept_objects = self.reg.get_model_input("size", obj, context)
+        _, dim_score, dim_data, dim_kept_objects = self.reg.get_model_input("dimensions", obj, context)
+
+        color_x.append([clr_score, clr_data])
+        size_x.append([sz_score, sz_data])
+        dim_x.append([dim_score, dim_data])
 
         return color_x, size_x, dim_x
 
@@ -196,10 +210,21 @@ class CorpusTraining:
 
 if __name__ == "__main__":
     trainer = CorpusTraining()
+    xml_file = "data/stim_v1.xml"
+    csv_file = "data/latest.csv"
+    #
+    inputs, outputs = trainer.get_train_x_y(xml_file, csv_file)
+    outputs = [o[:len(inputs[0])] for o in outputs]
+    print(inputs[0]) #clr index 0
+    print(outputs[0]) #clr index 0
     # trainer.parse_workspace_data_from_xml("data/stim_v1.xml")
-    # trainer.test_labeling()
-    all_responses = trainer.parse_responses_from_csv("data/latest.csv")
-    tokenized = trainer.process_all_outputs(all_responses)
-    clr, sz, dim = trainer.assemble_Y(tokenized)
-    print(len(clr) == len(sz) and len(clr) == len(dim))
-    print(clr[0])
+    # # trainer.test_labeling()
+    # all_responses = trainer.parse_responses_from_csv("data/latest.csv")
+    # tokenized = trainer.process_all_outputs(all_responses)
+    # inputs = trainer.assemble_x(tokenized)
+    # print(inputs)
+    # print(tokenized)
+    # print(len(tokenized))
+    # clr, sz, dim = trainer.assemble_Y(tokenized)
+    # print(len(clr) == len(sz) and len(clr) == len(dim))
+    # print(clr)
