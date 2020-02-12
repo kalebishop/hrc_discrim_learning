@@ -69,37 +69,27 @@ class SpeechModule:
         return l1, val1
 
     def _label_size(self, obj, context):
-        # estimate volume based on dimensions
-        dims = obj.get_feature_val("dimensions")
-        target_size = 1
-        for d in dims:
-            target_size *= d
-
-        # return: best label and # of stdevs from the mean in that direction
-        if target_size >= context.size_xbar:
+        # # estimate volume based on dimensions
+        z = obj.get_feature_val("z_size")
+        if z > 0:
             label = "big"
-        else:
+        elif z == 0:
+            label = ""
+        elif z < 0:
             label = "small"
 
-        diff = abs((target_size - context.size_xbar)/context.size_sd)
-
-        return label, diff
+        return label, abs(z)
 
     def _label_dimensionality(self, obj, context):
-        # operates on same principle as _label_size - should definitely
-        # be made more nuanced if possible
-        x, y = obj.get_feature_val("dimensions")
-        target_ratio = max(x/y, y/x)
-
-        # return: best label and # of stdevs from the mean in that direction
-        if target_ratio >= context.dim_xbar:
+        z = obj.get_feature_val("z_dim")
+        if z > 0:
             label = "long"
+        elif z == 0:
+            label = ""
         else:
             label = "short"
 
-        diff = abs((target_ratio - context.dim_xbar)/context.dim_sd)
-
-        return label, diff
+        return label, z
 
     def process_speech_string(self, string):
         # split into tokens

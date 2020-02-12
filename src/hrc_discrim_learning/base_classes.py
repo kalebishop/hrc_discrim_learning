@@ -1,5 +1,6 @@
 import math
 import statistics
+# import scipy.stats as stats
 
 """
 Documentation goes here
@@ -33,6 +34,9 @@ class Object:
             return self.features["rgb"]
         else:
             return self.features[feature]
+
+    def _set_feature_val(self, feature, val):
+        self.features[feature] = val
 
 class Context:
     def __init__(self, objs, name=""):
@@ -68,22 +72,70 @@ class Context:
         return obj.get_feature_val(feature)
 
     def _intialize_feature_distributions(self):
-        # grab size and dimensions
-        all_sizes = []
-        all_ratios = []
+        self.obj_size_dict = {}
+        self.obj_ratio = {}
         for o in self.env:
+            type = o.get_feature_val("type")
             dims = [float(d) for d in o.get_feature_val("dimensions")]
+
             sz = 1.0
             for d in dims:
                 sz *= d
-            all_sizes.append(sz)
-            all_ratios.append(dims[0]/dims[1])
 
-        self.size_xbar = statistics.mean(all_sizes)
-        self.size_sd = statistics.stdev(all_sizes, self.size_xbar)
+            try:
+                self.obj_size_dict[type].append(sz)
+            except KeyError:
+                self.obj_size_dict[type] = [sz]
 
-        self.dim_xbar = statistics.mean(all_ratios)
-        self.dim_sd = statistics.stdev(all_ratios, self.dim_xbar)
+            try:
+                self.obj_ratio[type].append(dims[0]/dims[1])
+            except KeyError:
+                self.obj_ratio[type] = [dims[0]/dims[1]]
+
+        for type in self.obj_size_dict.keys():
+            sz_xbar = statistics.mean(self.obj_size_dict[type])
+            sz_sd   = statistics.stdev(self.obj_size_dict[type], sz_xbar)
+
+            dim_xbar = statistics.mean(self.obj_ratio[type])
+            dim_sd   = statistics.stdev(self.obj_ratio[type], dim_xbar)
+
+            self.obj_size_dict[type] = (sz_xbar, sz_sd)
+            self.obj_ratio[type] = (dim_xbar, dim_sd)
+
+        for o in self.env:
+            type = o.get_feature_val("type")
+            dims = [float(d) for d in o.get_feature_val("dimensions")]
+
+            sz = 1.0
+            for d in dims:
+                sz *= d
+            ratio = dims[0] / dims[1]
+
+            sz_xbar, sz_sd = self.obj_size_dict[type]
+            dim_xbar, dim_sd = self.obj_ratio[type]
+
+            z_size = (sz - sz_xbar) / sz_sd
+            z_dim = (ratio - dim_xbar) / dim_sd
+
+            o._set_feature_val("z_size", zsize)
+            o._set_feature_val("z_dim", z_dim)
+
+        # grab size and dimensions
+        # all_sizes = []
+        # all_ratios = []
+        # for o in self.env:
+        #     dims = [float(d) for d in o.get_feature_val("dimensions")]
+        #     sz = 1.0
+        #     for d in dims:
+        #         sz *= d
+        #     all_sizes.append(sz)
+        #     all_ratios.append(dims[0]/dims[1])
+        #
+        # self.size_xbar = statistics.mean(all_sizes)
+        # self.size_sd = statistics.stdev(all_sizes, self.size_xbar)
+        #
+        # self.dim_xbar = statistics.mean(all_ratios)
+        # self.dim_sd = statistics.stdev(all_ratios, self.dim_xbar)
 
 
     # def _initialize_workspace_location_info(self):
