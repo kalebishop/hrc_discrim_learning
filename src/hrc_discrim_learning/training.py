@@ -19,11 +19,15 @@ class CorpusTraining:
 
     def get_train_x_y(self, xml_workspace_filename, csv_responses_filename):
         self.parse_workspace_data_from_xml(xml_workspace_filename)
+
         responses = self.parse_responses_from_csv(csv_responses_filename)
         tokenized_responses = self.process_all_outputs(responses)
 
         feature_inputs = self.assemble_x(tokenized_responses)
-        feature_outputs = self.assemble_Y(tokenized_responses)
+        # TODO update to work with all responses (rather than one per qid)
+        # feature_outputs = self.assemble_Y(tokenized_responses)
+
+        raise NotImplementedError
 
         return feature_inputs, feature_outputs
 
@@ -120,11 +124,12 @@ class CorpusTraining:
         index = 0
         for ws in self.workspaces:
             obj, context = self.workspaces[ws]
-            color_x, size_x, dim_x = self.assemble_x_for_q(obj, context, tokenized_responses[index])
+            for pid_response in tokenized_responses[index]:
+                color_x, size_x, dim_x = self.assemble_x_for_q(obj, context, pid_response)
+                color_full_x += color_x
+                size_full_x += size_x
+                dim_full_x += dim_x
             index+=1
-            color_full_x += color_x
-            size_full_x += size_x
-            dim_full_x += dim_x
 
         return color_full_x, size_full_x, dim_full_x
 
@@ -173,11 +178,12 @@ class CorpusTraining:
         size_Ys = []
         dim_Ys = []
 
-        for labels, tokens in tokenized_responses:
-            clr, sz, dim = self.assemble_Y_for_q(tokens)
-            color_Ys += clr
-            size_Ys += sz
-            dim_Ys += dim
+        for qid in tokenized_responses:
+            for labels, tokens in qid:
+                clr, sz, dim = self.assemble_Y_for_q(tokens)
+                color_Ys += clr
+                size_Ys += sz
+                dim_Ys += dim
 
         return color_Ys, size_Ys, dim_Ys
 
@@ -199,14 +205,24 @@ class CorpusTraining:
         return color_y, size_y, dim_y
 
     def process_all_outputs(self, all_responses):
-        chosen_responses = []
+        # chosen_responses = []
+        # for qid in all_responses:
+        #     # qid is a list of all responses
+        #     # we want the "modal" response
+        #     # selected = statistics.mode(qid)
+        #     labels, tokens = self.sm.process_speech_string(selected)
+        #     chosen_responses.append((labels, tokens))
+        # return chosen_responses
+
+        # NEW VERSION: use all responses (requires data cleaning)
+        parsed_responses = []
         for qid in all_responses:
-            # qid is a list of all responses
-            # we want the "modal" response
-            selected = statistics.mode(qid)
-            labels, tokens = self.sm.process_speech_string(selected)
-            chosen_responses.append((labels, tokens))
-        return chosen_responses
+            qid_y = []
+            for r in qid:
+                labels, tokens = self.sm.process_speech_string(r)
+                qid_y.append((labels, tokens))
+            parsed_responses.append(qid_y)
+        return parsed_responses
 
 if __name__ == "__main__":
     trainer = CorpusTraining()
