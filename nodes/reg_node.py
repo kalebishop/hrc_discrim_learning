@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 import rospy
 
 from hrc_discrim_learning.srv import SpeechRequest, SpeechRequestResponse
@@ -7,12 +8,13 @@ from hrc_discrim_learning import base_classes
 
 class REGnode:
     def __init__(self):
-        rospy.init_node("workspace/reg_node")
+        rospy.init_node("reg_node")
         self.reg_server = rospy.Service("workspace/reg", SpeechRequest, self.handle_speech_req)
         # self.percept_sub = rospy.Subscriber("workspace/perception", Workspace)
 
         self.reg = re_generator.REG()
-        self.reg.load_models()
+        # TODO uncomment
+        # self.reg.load_models()
 
         self.context = None
         self._bootstrap_workspace()
@@ -38,3 +40,6 @@ class REGnode:
 
         output = self.reg.generate_output(key, context)
         return SpeechRequestResponse(output)
+
+if __name__ == "__main__":
+    REGnode()

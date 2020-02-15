@@ -17,7 +17,7 @@ class Object:
 
         if msg:
             self.features = {
-                "id" = msg.id,           # object id
+                "id" : msg.id,           # object id
                 "type": msg.type,        # object type (block, screwdriver, etc)
                 "rgb": (msg.color.r, msg.color.g, msg.color.b),      # object color as RGBA
                 "dims": (msg.x_dim, msg.y_dim, msg.z_dim), # object dimentions (estimated)

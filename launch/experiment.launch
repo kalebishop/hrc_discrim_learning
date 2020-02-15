@@ -1,0 +1,7 @@
+<launch>
+  <!-- INPUT ARGUMENTS -->
+
+  <!-- LAUNCH -->
+  <node name="reg_node" pkg="hrc_discrim_learning" type="reg_node.py" output="screen"/>
+
+</launch>

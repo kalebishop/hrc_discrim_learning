@@ -1,9 +1,10 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # TODO uncomment
-from sklearn.svm import SVR
+# from sklearn.svm import SVR
 import numpy as np
 import copy
 import pickle
+import os
 
 from hrc_discrim_learning.speech_module import SpeechModule
 
@@ -36,7 +37,7 @@ class SpeechLearner:
 
 class REG:
     def __init__(self):
-        w2c = "data/w2c_4096.txt"
+        w2c = "/ros/catkin_ws/src/hrc_discrim_learning/src/hrc_discrim_learning/data/w2c_4096.txt"
         self.sm = SpeechModule(w2c)
         self.theta = 0.5
 
