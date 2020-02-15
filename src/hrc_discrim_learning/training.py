@@ -25,9 +25,9 @@ class CorpusTraining:
 
         feature_inputs = self.assemble_x(tokenized_responses)
         # TODO update to work with all responses (rather than one per qid)
-        # feature_outputs = self.assemble_Y(tokenized_responses)
+        feature_outputs = self.assemble_Y(tokenized_responses)
 
-        raise NotImplementedError
+        # raise NotImplementedError
 
         return feature_inputs, feature_outputs
 

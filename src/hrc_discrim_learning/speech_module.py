@@ -1,9 +1,7 @@
-# import opencv2 as cv\
 import statistics
 
 class SpeechModule:
     def __init__(self, w2c_filename):
-        # todo: implement svm trained on google model
         self.color_labels = self._read_color_label_w2c(w2c_filename)
         self.color_terms = ["black", "blue", "brown", "grey", "green", "orange", "pink", "purple", "red", "white", "yellow"]
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # TODO uncomment
-# from sklearn.svm import SVR
+from sklearn.svm import SVR
 import numpy as np
 import copy
 import pickle
@@ -46,6 +46,10 @@ class REG:
                         "size": SpeechLearner("size"),
                         "dimensions": SpeechLearner("dim")}
 
+    def load_models(self):
+        for model in self.models:
+            self.models[model].load_model()
+
     def train_model(self, feature, x, y):
         model = self.modles[feature]
         model.train(x, y)
@@ -61,7 +65,7 @@ class REG:
 
         # TODO finish
         best_candidate = max(pscore_dict.keys(), key=lambda x: pscore_dict[x])
-        if pscore_dict[best_candidate] >= self.theta:
+        if pscore_dict[best_candidate] >= self.theta or context.env_size > 1:
             return best_candidate
         else:
             return None, None
@@ -71,14 +75,7 @@ class REG:
         # TODO finish with ML model
         output = ""
 
-        # first: boil down to type
-        kept_objects = []
         type = object.get_feature_val("type")
-        for o in context.env:
-            o_type = object.get_feature_val("type")
-            if o_type == type:
-                kept_objects.append(o)
-        context = self.update_context(kept_objects)
 
         # next: iterate through possible features
         feature_set = copy.copy(self.features)

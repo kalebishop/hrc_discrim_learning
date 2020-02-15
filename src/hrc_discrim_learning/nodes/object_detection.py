@@ -12,11 +12,11 @@ import QTransform
 
 class PerceptionTf:
     def __init__(self, id_dict):
-        rospy.init_node("workspace_perception", anonymous=True)
+        rospy.init_node("workspace/perception_node", anonymous=True)
         self.tfBuffer = tf2_ros.Buffer(cache_time=rospy.Duration(30), debug=True)
 
         rospy.Subscriber("/objectsStamped", ObjectsStamped, self.perception_callback)
-        self.pub = rospy.Publisher("/workspace", Workspace, queue_size=2)
+        self.pub = rospy.Publisher("workspace/perception", Workspace, queue_size=2)
         # self.br = tf2_ros.TransformBroadcaster() # not needed?
         self.listener = tf2_ros.TransformListener(self.tfBuffer)
         self.rate = rospy.Rate(10)
@@ -49,7 +49,7 @@ class PerceptionTf:
                 clr_avg += clr
                 pxls += 1
 
-        return round(clr_avg / n)
+        return round(clr_avg / pxls)
 
     def get_corners(self, hmat, w, h):
         mat = QTransform(hmat)
@@ -74,7 +74,6 @@ class PerceptionTf:
         for i in range(0, len(msg.objects), 12):
             id = msg.objects[i]
             type = self.dict[id]
-            x =
             w  = msg.objects[i+1]
             h  = msg.objects[i+2]
 
@@ -91,7 +90,7 @@ class PerceptionTf:
 
             corners = self.get_corners(msg[i+3:i+13], w, h)
             # TODO: add analysis for color and type
-            output.ObjectArray(new_object)
+            output.ObjectArray.append(new_object)
 
         self.pub.publish(output)
 

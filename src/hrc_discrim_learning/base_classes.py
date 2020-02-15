@@ -6,25 +6,23 @@ import statistics
 Documentation goes here
 """
 def process_workspace_from_msg(msg):
-    new_workspace = {}
-    for object in msg:
-        o = Object(msg)
-        id = msg.id
-        new_workspace[id] = o
-    return new_workspace
+    new_workspace = []
+    for obj_msg in msg.ObjectArray:
+        new_workspace.append(Object(obj_msg))
+    return Context(new_workspace)
 
 class Object:
     def __init__(self, msg=None):
         # TODO update commented section
-        pass
-        # if msg:
-        #     self.features = {
-        #         # "id" = msg.id            # object id
-        #         "type": msg.type,        # object type (block, screwdriver, etc)
-        #         "color": msg.color,      # object color as RGBA
-        #         "dims": (msg.x_dim, msg.y_dim, msg.z_dim), # object dimentions (estimated)
-        #         "pose": msg.pose.position # object pose (estimated) as Position msg (xyz)
-        #     }
+
+        if msg:
+            self.features = {
+                "id" = msg.id,           # object id
+                "type": msg.type,        # object type (block, screwdriver, etc)
+                "rgb": (msg.color.r, msg.color.g, msg.color.b),      # object color as RGBA
+                "dims": (msg.x_dim, msg.y_dim, msg.z_dim), # object dimentions (estimated)
+                "pose": msg.pose.position # object pose (estimated) as Position msg (xyz)
+            }
 
     def from_dict(self, dict):
         self.features = dict
@@ -72,35 +70,34 @@ class Context:
         return obj.get_feature_val(feature)
 
     def _intialize_feature_distributions(self):
-        self.obj_size_dict = {}
-        self.obj_ratio = {}
+        obj_sizes = {}
+        obj_ratios = {}
         for o in self.env:
             type = o.get_feature_val("type")
             dims = [float(d) for d in o.get_feature_val("dimensions")]
-
             sz = 1.0
             for d in dims:
                 sz *= d
 
             try:
-                self.obj_size_dict[type].append(sz)
+                obj_sizes[type].append(sz)
             except KeyError:
-                self.obj_size_dict[type] = [sz]
+                obj_sizes[type] = [sz]
 
             try:
-                self.obj_ratio[type].append(dims[0]/dims[1])
+                obj_ratios[type].append(dims[0]/dims[1])
             except KeyError:
-                self.obj_ratio[type] = [dims[0]/dims[1]]
+                obj_ratios[type] = [dims[0]/dims[1]]
 
-        for type in self.obj_size_dict.keys():
-            sz_xbar = statistics.mean(self.obj_size_dict[type])
-            sz_sd   = statistics.stdev(self.obj_size_dict[type], sz_xbar)
+        for type in obj_sizes.keys():
+            sz_xbar = statistics.mean(obj_sizes[type])
+            sz_sd   = statistics.stdev(obj_sizes[type], sz_xbar)
 
-            dim_xbar = statistics.mean(self.obj_ratio[type])
-            dim_sd   = statistics.stdev(self.obj_ratio[type], dim_xbar)
+            dim_xbar = statistics.mean(obj_ratios[type])
+            dim_sd   = statistics.stdev(obj_ratios[type], dim_xbar)
 
-            self.obj_size_dict[type] = (sz_xbar, sz_sd)
-            self.obj_ratio[type] = (dim_xbar, dim_sd)
+            obj_sizes[type] = (sz_xbar, sz_sd)
+            obj_ratios[type] = (dim_xbar, dim_sd)
 
         for o in self.env:
             type = o.get_feature_val("type")
@@ -111,8 +108,8 @@ class Context:
                 sz *= d
             ratio = dims[0] / dims[1]
 
-            sz_xbar, sz_sd = self.obj_size_dict[type]
-            dim_xbar, dim_sd = self.obj_ratio[type]
+            sz_xbar, sz_sd = obj_sizes[type]
+            dim_xbar, dim_sd = obj_ratios[type]
 
             z_size = (sz - sz_xbar) / sz_sd
             z_dim = (ratio - dim_xbar) / dim_sd
