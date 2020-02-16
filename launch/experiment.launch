@@ -2,6 +2,9 @@
   <!-- INPUT ARGUMENTS -->
 
   <!-- LAUNCH -->
+  <node pkg="rostopic" type="rostopic" name='ws_info_pub' args='pub /workspace/perception hrc_discrim_learning/Workspace -l -f $(find hrc_discrim_learning)/launch/experiment_test_ws.yaml'/>
+
   <node name="reg_node" pkg="hrc_discrim_learning" type="reg_node.py" output="screen"/>
 
+  <node name="experiment_node" pkg="hrc_discrim_learning" type="expmt_main.py" output="screen"/>
 </launch>

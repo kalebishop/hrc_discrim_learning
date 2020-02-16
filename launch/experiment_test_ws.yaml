@@ -1,0 +1,10 @@
+ObjectArray:
+  -   id : 0
+      type: "block"
+      color:
+        r: 88
+        g: 5
+        b: 140
+      x_dim: 411
+      y_dim: 94
+      z_dim: 1

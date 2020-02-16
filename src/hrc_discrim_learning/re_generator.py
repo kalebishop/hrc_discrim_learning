@@ -1,6 +1,4 @@
-#!/usr/bin/env python3
-# TODO uncomment
-# from sklearn.svm import SVR
+from sklearn import svm
 import numpy as np
 import copy
 import pickle
@@ -12,7 +10,7 @@ class SpeechLearner:
     def __init__(self, label):
         # TODO tune
         self.label = label
-        # self.clf = SVR(kernel='linear', C=100, gamma='auto', epsilon=.1)
+        self.clf = SVR(kernel='linear', C=100, gamma='auto', epsilon=.1)
 
     def train(self, X, y):
         self.clf.fit(X, y)

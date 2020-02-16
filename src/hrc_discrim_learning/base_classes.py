@@ -20,8 +20,8 @@ class Object:
                 "id" : msg.id,           # object id
                 "type": msg.type,        # object type (block, screwdriver, etc)
                 "rgb": (msg.color.r, msg.color.g, msg.color.b),      # object color as RGBA
-                "dims": (msg.x_dim, msg.y_dim, msg.z_dim), # object dimentions (estimated)
-                "pose": msg.pose.position # object pose (estimated) as Position msg (xyz)
+                "dimensions": (msg.x_dim, msg.y_dim, msg.z_dim), # object dimentions (estimated)
+                # "pose": msg.pose.position # object pose (estimated) as Position msg (xyz)
             }
 
     def from_dict(self, dict):
@@ -70,6 +70,12 @@ class Context:
         return obj.get_feature_val(feature)
 
     def _intialize_feature_distributions(self):
+        if self.env_size == 1:
+            o = self.env[0]
+            o._set_feature_val("z_size", 0)
+            o._set_feature_val("z_dim", 0)
+            return
+
         obj_sizes = {}
         obj_ratios = {}
         for o in self.env:
