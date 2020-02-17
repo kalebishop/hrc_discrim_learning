@@ -1,9 +1,9 @@
-#!/usr/bin/env python
 import rospy
 import xml.etree.ElementTree as et
 import csv
 from colorsys import hsv_to_rgb
 import statistics
+import copy
 
 from hrc_discrim_learning.base_classes import Object, Context
 from hrc_discrim_learning.speech_module import SpeechModule
@@ -16,6 +16,9 @@ class CorpusTraining:
         self.sm = SpeechModule(w2c)
         self.reg = REG()
         self.workspaces = {}
+
+    def save_models(self):
+        self.reg.save_models()
 
     def get_train_x_y(self, xml_workspace_filename, csv_responses_filename):
         self.parse_workspace_data_from_xml(xml_workspace_filename)
@@ -31,13 +34,21 @@ class CorpusTraining:
 
         return feature_inputs, feature_outputs
 
-    def train(self, feature_inputs, feature_outputs):
+    def train(self, feature_inputs, feature_outputs, save=True):
         clr_x, sz_x, dim_x = feature_inputs
         clr_y, sz_y, dim_y = feature_outputs
 
-        self.reg.train_model("color", clr_x, clr_y)
-        self.reg.train_model("size", sz_x, sz_y)
-        self.reg.train_model("dim", dim_x, dim_y)
+        # truncate to appropriate sizes
+        clr_y = clr_y[:len(clr_x)]
+        sz_y = sz_y[:len(sz_x)]
+        dim_y = dim_y[:len(dim_y)]
+
+
+        # self.reg.train_model("color", clr_x, clr_y)
+        # self.reg.train_model("size", sz_x, sz_y)
+        # self.reg.train_model("dim", dim_x, dim_y)
+        #
+        # self.reg.save_model()
 
     def parse_workspace_data_from_xml(self, filename):
         self.tree = et.parse(filename)
@@ -77,42 +88,52 @@ class CorpusTraining:
 
                 obj_lst.append(o)
 
+            print(obj_lst)
             self.workspaces[id] = (key_item, Context(obj_lst))
 
     def assemble_x_for_q(self, obj, context, tokenized_response):
         labels, tokens = tokenized_response
         type = obj.get_feature_val("type")
 
+        features = ["color", "size", "dimensions"]
+
         color_x = []
         size_x = []
         dim_x = []
 
         for t in tokens:
-            _, clr_score, clr_data, clr_kept_objects = self.reg.get_model_input("color", obj, context)
-            _, sz_score, sz_data, sz_kept_objects = self.reg.get_model_input("size", obj, context)
-            _, dim_score, dim_data, dim_kept_objects = self.reg.get_model_input("dimensions", obj, context)
-
-            color_x.append([clr_score, clr_data])
-            size_x.append([sz_score, sz_data])
-            dim_x.append([dim_score, dim_data])
+            if "color" in features:
+                _, clr_score, clr_data, clr_kept_objects = self.reg.get_model_input("color", obj, context)
+                color_x.append([clr_score, clr_data])
+            if "size" in features:
+                _, sz_score, sz_data, sz_kept_objects = self.reg.get_model_input("size", obj, context)
+                size_x.append([sz_score, sz_data])
+            if "dimensions" in features:
+                _, dim_score, dim_data, dim_kept_objects = self.reg.get_model_input("dimensions", obj, context)
+                dim_x.append([dim_score, dim_data])
 
             if t == self.sm.COLOR_I:
                 kept = clr_kept_objects
+                features.remove("color")
             elif t == self.sm.SIZE_I:
                 kept = sz_kept_objects
+                features.remove("size")
             elif t == self.sm.DIM_I:
                 kept = dim_kept_objects
+                features.remove("dimensions")
 
             context = self.reg.update_context(kept)
 
         # you'll always have a last one pre-noun
-        _, clr_score, clr_data, clr_kept_objects = self.reg.get_model_input("color", obj, context)
-        _, sz_score, sz_data, sz_kept_objects = self.reg.get_model_input("size", obj, context)
-        _, dim_score, dim_data, dim_kept_objects = self.reg.get_model_input("dimensions", obj, context)
-
-        color_x.append([clr_score, clr_data])
-        size_x.append([sz_score, sz_data])
-        dim_x.append([dim_score, dim_data])
+        if "color" in features:
+            _, clr_score, clr_data, clr_kept_objects = self.reg.get_model_input("color", obj, context)
+            color_x.append([clr_score, clr_data])
+        if "size" in features:
+            _, sz_score, sz_data, sz_kept_objects = self.reg.get_model_input("size", obj, context)
+            size_x.append([sz_score, sz_data])
+        if "dimensions" in features:
+            _, dim_score, dim_data, dim_kept_objects = self.reg.get_model_input("dimensions", obj, context)
+            dim_x.append([dim_score, dim_data])
 
         return color_x, size_x, dim_x
 
@@ -168,15 +189,18 @@ class CorpusTraining:
                 count = 0
                 for index in indicies_to_qs.keys():
                     response = row[index]
+                    if response: # check response is not empty
                     # add response to appropriate list
-                    all_responses[count].append(response)
-                    count += 1
+                        all_responses[count].append(response)
+                        count += 1
         return all_responses
 
     def assemble_Y(self, tokenized_responses):
         color_Ys = []
         size_Ys = []
         dim_Ys = []
+
+        # import pdb; pdb.set_trace()
 
         for qid in tokenized_responses:
             for labels, tokens in qid:
@@ -188,32 +212,37 @@ class CorpusTraining:
         return color_Ys, size_Ys, dim_Ys
 
     def assemble_Y_for_q(self, tokenized_response):
+        if not tokenized_response:
+            return [False], [False], [False]
+
         color_y = []
         size_y = []
         dim_y = []
 
         base = [self.sm.COLOR_I, self.sm.SIZE_I, self.sm.DIM_I]
+        features = copy.copy(base)
         for token in tokenized_response:
-            res = map(lambda x: token == x, base)
-            color_y.append(res[0])
-            size_y.append(res[1])
-            dim_y.append(res[2])
+            res = list(map(lambda x: token == x, base))
+            if self.sm.COLOR_I in features:
+                color_y.append(res[0])
+            if self.sm.SIZE_I in features:
+                size_y.append(res[1])
+            if self.sm.DIM_I in features:
+                dim_y.append(res[2])
 
-        if not tokenized_response:
-            return [False], [False], [False]
+            features.remove(token)
+
+        # last pre-noun space
+        if self.sm.COLOR_I in features:
+            color_y.append(False)
+        if self.sm.SIZE_I in features:
+            size_y.append(False)
+        if self.sm.DIM_I in features:
+            dim_y.append(False)
 
         return color_y, size_y, dim_y
 
     def process_all_outputs(self, all_responses):
-        # chosen_responses = []
-        # for qid in all_responses:
-        #     # qid is a list of all responses
-        #     # we want the "modal" response
-        #     # selected = statistics.mode(qid)
-        #     labels, tokens = self.sm.process_speech_string(selected)
-        #     chosen_responses.append((labels, tokens))
-        # return chosen_responses
-
         # NEW VERSION: use all responses (requires data cleaning)
         parsed_responses = []
         for qid in all_responses:
@@ -228,19 +257,20 @@ if __name__ == "__main__":
     trainer = CorpusTraining()
     xml_file = "data/stim_v1.xml"
     csv_file = "data/latest.csv"
+
+    # inputs, outputs = trainer.get_train_x_y(xml_file, csv_file)
+    # #
+    responses = [["screwdriver", "blue screwdriver"], ["bottle", "red bottle"]]
     #
-    inputs, outputs = trainer.get_train_x_y(xml_file, csv_file)
-    outputs = [o[:len(inputs[0])] for o in outputs]
-    print(inputs[0]) #clr index 0
-    print(outputs[0]) #clr index 0
-    # trainer.parse_workspace_data_from_xml("data/stim_v1.xml")
-    # # trainer.test_labeling()
-    # all_responses = trainer.parse_responses_from_csv("data/latest.csv")
-    # tokenized = trainer.process_all_outputs(all_responses)
-    # inputs = trainer.assemble_x(tokenized)
-    # print(inputs)
-    # print(tokenized)
-    # print(len(tokenized))
-    # clr, sz, dim = trainer.assemble_Y(tokenized)
-    # print(len(clr) == len(sz) and len(clr) == len(dim))
-    # print(clr)
+    tokenized = trainer.process_all_outputs(responses)
+    trainer.parse_workspace_data_from_xml(xml_file)
+    # #
+    inputs = trainer.assemble_x(tokenized)
+    outputs = trainer.assemble_Y(tokenized)
+
+
+    clr_x, sz_x, dim_x = inputs
+    clr_y, sz_y, dim_y = outputs
+
+    trainer.train(inputs, outputs)
+    trainer.save_models()

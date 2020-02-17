@@ -1,5 +1,5 @@
 ObjectArray:
-  -   id : 0
+  -   id : 1
       type: "block"
       color:
         r: 88
@@ -8,3 +8,43 @@ ObjectArray:
       x_dim: 411
       y_dim: 94
       z_dim: 1
+
+  -   id: 2
+      type: "block"
+      color:
+        r: 18
+        g: 115
+        b: 181
+      x_dim: 117
+      y_dim: 118
+      z_dim: 1
+
+  - id: 3
+    type: "block"
+    color:
+       r: 18
+       g: 115
+       b: 181
+    x_dim: 57
+    y_dim: 60
+    z_dim: 1
+
+  - id: 4
+    type: "block"
+    color:
+      r: 88
+      g: 5
+      b: 140
+    x_dim: 90
+    y_dim: 87
+    z_dim: 1
+
+  - id: 5
+    type: "block"
+    color:
+      r: 88
+      g: 5
+      b: 140
+    x_dim: 57
+    y_dim: 186
+    z_dim: 1

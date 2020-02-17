@@ -96,11 +96,18 @@ class Context:
                 obj_ratios[type] = [dims[0]/dims[1]]
 
         for type in obj_sizes.keys():
-            sz_xbar = statistics.mean(obj_sizes[type])
-            sz_sd   = statistics.stdev(obj_sizes[type], sz_xbar)
+            if len(obj_sizes[type]) == 1:
+                sz_xbar = obj_sizes[type][0]
+                sz_sd = 0
 
-            dim_xbar = statistics.mean(obj_ratios[type])
-            dim_sd   = statistics.stdev(obj_ratios[type], dim_xbar)
+                dim_xbar = obj_ratios[type][0]
+                dim_sd = 0
+            else:
+                sz_xbar = statistics.mean(obj_sizes[type])
+                sz_sd   = statistics.stdev(obj_sizes[type], sz_xbar)
+
+                dim_xbar = statistics.mean(obj_ratios[type])
+                dim_sd   = statistics.stdev(obj_ratios[type], dim_xbar)
 
             obj_sizes[type] = (sz_xbar, sz_sd)
             obj_ratios[type] = (dim_xbar, dim_sd)
@@ -117,10 +124,10 @@ class Context:
             sz_xbar, sz_sd = obj_sizes[type]
             dim_xbar, dim_sd = obj_ratios[type]
 
-            z_size = (sz - sz_xbar) / sz_sd
-            z_dim = (ratio - dim_xbar) / dim_sd
+            z_size = (sz - sz_xbar) / sz_sd if sz_sd != 0 else 0
+            z_dim = (ratio - dim_xbar) / dim_sd if dim_sd != 0 else 0
 
-            o._set_feature_val("z_size", zsize)
+            o._set_feature_val("z_size", z_size)
             o._set_feature_val("z_dim", z_dim)
 
         # grab size and dimensions

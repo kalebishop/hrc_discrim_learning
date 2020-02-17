@@ -1,10 +1,12 @@
-from sklearn import svm
+from sklearn.svm import SVR
 import numpy as np
 import copy
 import pickle
 import os
 
 from hrc_discrim_learning.speech_module import SpeechModule
+from hrc_discrim_learning.base_classes import Object, Context
+
 
 class SpeechLearner:
     def __init__(self, label):
@@ -25,12 +27,12 @@ class SpeechLearner:
 
     def save_model(self, filename=""):
         if not filename:
-            filename = "/ros/catkin_ws/src/workspace_speech/models/speech/svm_" + self.label + ".pkl"
-        pickle.dump(model, open(filename, 'wb'))
+            filename = "/ros/catkin_ws/src/hrc_discrim_learning/model/svr_" + self.label + ".pkl"
+        pickle.dump(self.clf, open(filename, 'wb'))
 
     def load_model(self, filename=""):
         if not filename:
-            filename = "/ros/catkin_ws/src/workspace_speech/models/speech/svm_" + self.label + ".pkl"
+            filename = "/ros/catkin_ws/src/hrc_discrim_learning/model/svr_" + self.label + ".pkl"
         self.clf = pickle.load(open(filename, 'rb'))
 
 class REG:
@@ -45,12 +47,16 @@ class REG:
                         "size": SpeechLearner("size"),
                         "dimensions": SpeechLearner("dim")}
 
+    def save_models(self):
+        for model in self.models:
+            self.models[model].save_model()
+
     def load_models(self):
         for model in self.models:
             self.models[model].load_model()
 
     def train_model(self, feature, x, y):
-        model = self.modles[feature]
+        model = self.models[feature]
         model.train(x, y)
 
     def _generate_single_output(self, object, context, feature_set):
