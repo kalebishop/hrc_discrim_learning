@@ -6,5 +6,7 @@
 
   <node name="reg_node" pkg="hrc_discrim_learning" type="reg_node.py" output="screen"/>
 
-  <node name="experiment_node" pkg="hrc_discrim_learning" type="expmt_main.py" output="screen"/>
+  <node name="perception_node" pkg="hrc_discrim_learning" type="object_detection.py" output="screen"/>
+
+  <!-- <node name="experiment_node" pkg="hrc_discrim_learning" type="expmt_main.py" output="screen"/> -->
 </launch>

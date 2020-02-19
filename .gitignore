@@ -2,3 +2,4 @@
 CTest*
 train/*
 *.bag
+*.h5

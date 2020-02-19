@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 import rospy
-import tf2_ros
-import tf2_geometry_msgs
+# import tf2_ros
+# import tf2_geometry_msgs
 from find_object_2d.msg import ObjectsStamped
 from workspace_speech.msg import Workspace, Object
 from sensor_msgs.msg import Image
@@ -12,13 +12,13 @@ import QTransform
 
 class PerceptionTf:
     def __init__(self, id_dict):
-        rospy.init_node("workspace/perception_node", anonymous=True)
-        self.tfBuffer = tf2_ros.Buffer(cache_time=rospy.Duration(30), debug=True)
+        rospy.init_node("perception_node", anonymous=True)
+        # self.tfBuffer = tf2_ros.Buffer(cache_time=rospy.Duration(30), debug=True)
 
         rospy.Subscriber("/objectsStamped", ObjectsStamped, self.perception_callback)
         self.pub = rospy.Publisher("workspace/perception", Workspace, queue_size=2)
         # self.br = tf2_ros.TransformBroadcaster() # not needed?
-        self.listener = tf2_ros.TransformListener(self.tfBuffer)
+        # self.listener = tf2_ros.TransformListener(self.tfBuffer)
         self.rate = rospy.Rate(10)
 
         self.bridge = CvBridge()
@@ -27,13 +27,13 @@ class PerceptionTf:
 
         rospy.spin()
 
-    def get_transform(self, obj_name, query_time):
-        try:
-            trans = self.tfBuffer.lookup_transform("map", obj_name, query_time, rospy.Duration(0.5))
-            return trans
-        except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-            # print('err')
-            return None
+    # def get_transform(self, obj_name, query_time):
+    #     try:
+    #         trans = self.tfBuffer.lookup_transform("map", obj_name, query_time, rospy.Duration(0.5))
+    #         return trans
+    #     except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+    #         # print('err')
+    #         return None
 
     def get_color_average(self, img, corners):
         # img = rospy.wait_for_message(self.image_topic, Image)
@@ -78,9 +78,9 @@ class PerceptionTf:
             h  = msg.objects[i+2]
 
             # get associated transform
-            trans = self.get_transform("object_" + id, time)
-            if not trans:
-                continue
+            # trans = self.get_transform("object_" + id, time)
+            # if not trans:
+            #     continue
 
             new_object = Object()
             new_object.id = id
