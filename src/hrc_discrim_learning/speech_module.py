@@ -87,7 +87,7 @@ class SpeechModule:
         else:
             label = "short"
 
-        return label, z
+        return label, abs(z)
 
     def process_speech_string(self, string):
         # split into tokens

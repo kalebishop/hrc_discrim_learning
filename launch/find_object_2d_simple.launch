@@ -1,0 +1,9 @@
+<launch>
+  <include file="$(find hrc_discrim_learning)/launch/old/usb_display.launch"/>
+
+  <node pkg="find_object_2d" name="find_object_2d" type="find_object_2d">
+    <remap from="image" to="usb_cam/image_raw"/>
+  </node>
+
+
+</launch>

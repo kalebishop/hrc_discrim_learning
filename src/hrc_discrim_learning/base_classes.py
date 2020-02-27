@@ -29,7 +29,10 @@ class Object:
 
     def get_feature_val(self, feature):
         if feature == "color":
-            return self.features["rgb"]
+            try:
+                return self.features["color"]
+            except KeyError:
+                return self.features["rgb"]
         else:
             return self.features[feature]
 
