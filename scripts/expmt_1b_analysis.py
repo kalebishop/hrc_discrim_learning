@@ -7,13 +7,13 @@ COLOR_I = 0
 SIZE_I = 1
 DIM_I = 2
 
-COLOR = ["red", "yellow", "blue", "green", "purple", "grey", "white"]
+COLOR = ["red", "yellow", "blue", "green", "purple", "grey", "white", "violet"]
 SIZE = ["big", "biggest", "small", "smallest"]
-DIM = ["long", "longest", "loing", "short", "shortest", "length"]
+DIM = ["long", "longest", "loing", "short", "shortest", "length", "rectang", "retang", "square", "cub", "brick"]
 
 def get_usage_counts_per_stim():
     # read from csv titled latest.csv
-    with open("data/study_v1_responses_raw.csv", newline='') as csvfile:
+    with open("data/study_v2_responses.csv", newline='') as csvfile:
         csvreader = csv.reader(csvfile, delimiter=",")
         header = next(csvreader)
         stim_dict = {}
@@ -68,7 +68,7 @@ def write_csv_from_dict(dict, output_filename, header_fields=[]):
 
 def get_usage_counts_per_pid():
     # read from csv titled latest.csv
-    with open("data/study_v1_responses_raw.csv", newline='') as csvfile:
+    with open("data/study_v2_responses.csv", newline='') as csvfile:
         csvreader = csv.reader(csvfile, delimiter=",")
         header = next(csvreader)
         response_dict = {}
@@ -122,7 +122,7 @@ def get_usage_counts_per_pid():
 
 def get_response_tables_by_feature():
     # read from csv titled latest.csv
-    with open("data/study_v1_responses_raw.csv", newline='') as csvfile:
+    with open("data/study_v2_responses.csv", newline='') as csvfile:
         csvreader = csv.reader(csvfile, delimiter=",")
         header = next(csvreader)
         response_dict = {}
@@ -176,17 +176,23 @@ def get_response_tables_by_feature():
     return response_dict
 
 def main():
-    # dict = get_usage_counts_per_stim()
-    # header_fields = ["qid", "color", "size", "dim"]
-    # output_filename = "data/data_by_qid.csv"
+    dict = get_usage_counts_per_stim()
+    header_fields = ["qid", "color", "size", "dim"]
+    output_filename = "data/v2_data_by_qid.csv"
 
-    # dict = get_usage_counts_per_pid()
-    # header_fields = ["pid", "color", "size", "dim"]
-    # output_filename = "data/data_by_pid.csv"
+    write_csv_from_dict(dict, output_filename, header_fields)
+
+
+    dict = get_usage_counts_per_pid()
+    header_fields = ["pid", "color", "size", "dim"]
+    output_filename = "data/v2_data_by_pid.csv"
+
+    write_csv_from_dict(dict, output_filename, header_fields)
+
 
     dict = get_response_tables_by_feature()
     header_fields = ["pid", "used_color", "used_size", "used_dim"]
-    output_filename = "data/data_by_qid_and_pid.csv"
+    output_filename = "data/v2_data_by_qid_and_pid.csv"
 
     write_csv_from_dict(dict, output_filename, header_fields)
 
