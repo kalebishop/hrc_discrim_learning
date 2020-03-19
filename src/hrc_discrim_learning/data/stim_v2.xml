@@ -7,6 +7,11 @@
         <x>189</x>
         <y>63</y> </dimensions>
       <hsv>277, 96, 55</hsv>
+
+      <color>purple</color>
+      <size>big</size>
+      <length>long</length>
+
       <location>
         <x>411</x>
         <y>94</y> </location> </item>
@@ -17,6 +22,11 @@
         <x>117</x>
         <y>118</y> </dimensions>
       <hsv>204, 90, 71</hsv>
+
+      <color>blue</color>
+      <size>big</size>
+      <length>short</length>
+
       <location>
         <x>460</x>
         <y>233</y> </location> </item>
@@ -27,6 +37,11 @@
         <x>57</x>
         <y>60</y> </dimensions>
       <hsv>204, 90, 63</hsv>
+
+      <color>blue</color>
+      <size>small</size>
+      <length>short</length>
+
       <location>
         <x>74</x>
         <y>349</y> </location> </item>
@@ -37,6 +52,11 @@
         <x>90</x>
         <y>87</y> </dimensions>
       <hsv>277, 96, 67</hsv>
+
+      <color>purple</color>
+      <size>small</size>
+      <length>short</length>
+
       <location>
         <x>133</x>
         <y>455</y> </location> </item>
@@ -47,6 +67,11 @@
         <x>57</x>
         <y>186</y> </dimensions>
       <hsv>278, 96, 68</hsv>
+
+      <color>purple</color>
+      <size>big</size>
+      <length>long</length>
+
       <location>
         <x>230</x>
         <y>417</y> </location> </item>
@@ -59,6 +84,11 @@
         <x>63</x>
         <y>59</y> </dimensions>
       <hsv>204, 90, 63</hsv>
+
+      <color>blue</color>
+      <size>small</size>
+      <length>short</length>
+
       <location>
         <x>72</x>
         <y>75</y> </location> </item>
@@ -69,6 +99,11 @@
         <x>102</x>
         <y>101</y> </dimensions>
       <hsv>277, 95, 60</hsv>
+
+      <color>purple</color>
+      <size>big</size>
+      <length>short</length>
+
       <location>
         <x>125</x>
         <y>177</y> </location> </item>
@@ -78,7 +113,12 @@
       <dimensions>
         <x>63</x>
         <y>195</y> </dimensions>
-      <hsv>204, 90, 63</hsv>
+      <hsv>277, 95, 60</hsv>
+
+      <color>purple</color>
+      <size>big</size>
+      <length>long</length>
+
       <location>
         <x>227</x>
         <y>139</y> </location> </item>
@@ -89,6 +129,11 @@
         <x>199</x>
         <y>84</y> </dimensions>
       <hsv>180, 76, 61</hsv>
+
+      <color>blue</color>
+      <size>big</size>
+      <length>long</length>
+
       <location>
         <x>400</x>
         <y>104</y> </location> </item>
@@ -99,6 +144,11 @@
         <x>62</x>
         <y>64</y> </dimensions>
       <hsv>204, 85, 91</hsv>
+
+      <color>blue</color>
+      <size>small</size>
+      <length>short</length>
+
       <location>
         <x>319</x>
         <y>207</y> </location> </item>
@@ -109,6 +159,11 @@
         <x>90</x>
         <y>77</y> </dimensions>
       <hsv>63, 52, 61</hsv>
+
+      <color>green</color>
+      <size>small</size>
+      <length>short</length>
+
       <location>
         <x>451</x>
         <y>202</y> </location> </item>
@@ -119,6 +174,11 @@
         <x>195</x>
         <y>55</y> </dimensions>
       <hsv>277, 96, 51</hsv>
+
+      <color>purple</color>
+      <size>big</size>
+      <length>long</length>
+
       <location>
         <x>394</x>
         <y>314</y> </location> </item>
@@ -129,6 +189,11 @@
         <x>222</x>
         <y>35</y> </dimensions>
       <hsv>300, 88, 41</hsv>
+
+      <color>purple</color>
+      <size>big</size>
+      <length>long</length>
+
       <location>
         <x>132</x>
         <y>360</y> </location> </item>
@@ -139,6 +204,11 @@
         <x>139</x>
         <y>24</y> </dimensions>
       <hsv>300, 88, 41</hsv>
+
+      <color>purple</color>
+      <size>small</size>
+      <length>short</length>
+
       <location>
         <x>228</x>
         <y>397</y> </location> </item>
@@ -149,6 +219,11 @@
         <x>208</x>
         <y>27</y> </dimensions>
       <hsv>0, 79, 83</hsv>
+
+      <color>red</color>
+      <size>big</size>
+      <length>long</length>
+
       <location>
         <x>260</x>
         <y>448</y> </location> </item>
@@ -159,6 +234,11 @@
         <x>116</x>
         <y>108</y> </dimensions>
       <hsv>230, 30, 16</hsv>
+
+      <color>black</color>
+      <size>big</size>
+      <length>long</length>
+
       <location>
         <x>80</x>
         <y>451</y> </location> </item>
@@ -169,6 +249,11 @@
         <x>117</x>
         <y>109</y> </dimensions>
       <hsv>204, 90, 72</hsv>
+
+      <color>blue</color>
+      <size>big</size>
+      <length>short</length>
+
       <location>
         <x>463</x>
         <y>466</y> </location> </item>
@@ -179,6 +264,7 @@
         <x>80</x>
         <y>80</y> </dimensions>
       <hsv>100, 66, 55</hsv>
+
       <location>
         <x>60</x>
         <y>300</y> </location> </item>
@@ -239,7 +325,7 @@
       <dimensions>
         <x>181</x>
         <y>30</y> </dimensions>
-      <hsv>0. 76, 87</hsv>
+      <hsv>0, 76, 87</hsv>
       <location>
         <x>275</x>
         <y>211</y> </location> </item>
@@ -361,7 +447,7 @@
       <dimensions>
         <x>181</x>
         <y>30</y> </dimensions>
-      <hsv>0. 76, 87</hsv>
+      <hsv>0, 76, 87</hsv>
       <location>
         <x>275</x>
         <y>211</y> </location> </item>
@@ -483,7 +569,7 @@
       <dimensions>
         <x>181</x>
         <y>30</y> </dimensions>
-      <hsv>0. 76, 87</hsv>
+      <hsv>0, 76, 87</hsv>
       <location>
         <x>275</x>
         <y>211</y> </location> </item>
@@ -646,7 +732,7 @@
       <dimensions>
         <x>181</x>
         <y>30</y> </dimensions>
-      <hsv>0. 76, 87</hsv>
+      <hsv>0, 76, 87</hsv>
       <location>
         <x>275</x>
         <y>211</y> </location> </item>
@@ -811,7 +897,7 @@
       <dimensions>
         <x>181</x>
         <y>30</y> </dimensions>
-      <hsv>0. 76, 87</hsv>
+      <hsv>0, 76, 87</hsv>
       <location>
         <x>275</x>
         <y>211</y> </location> </item>
@@ -1139,7 +1225,7 @@
       <dimensions>
         <x>181</x>
         <y>30</y> </dimensions>
-      <hsv>0. 76, 87</hsv>
+      <hsv>0, 76, 87</hsv>
       <location>
         <x>275</x>
         <y>211</y> </location> </item>

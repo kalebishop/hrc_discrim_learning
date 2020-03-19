@@ -154,17 +154,18 @@ class CorpusTraining:
 
         return color_full_x, size_full_x, dim_full_x
 
-    def test_labeling(self):
+    def test_labeling(self, key, c):
         # show usage
-        key, env = self.workspaces['Q3.2']
-        c = Context(env)
+        # key, env = self.workspaces['Q3.2']
+        # c = Context(env)
         w2c = "data/w2c_4096.txt"
         self.sm = SpeechModule(w2c)
-        clr = self.sm.label_color(key)
-        sz = self.sm.label_size(key, c)
-        dm = self.sm.label_dimensionality(key, c)
+        clr = self.sm.label_feature(key, c, "color")
+        sz = self.sm.label_feature(key, c, "size")
+        dim = self.sm.label_feature(key, c, "dimensions")
 
-        print(clr, sz, dm)
+        # print(clr, sz, dm)
+        return clr, sz, dim
 
     def parse_responses_from_csv(self, filename):
         with open(filename) as csvfile:

@@ -93,10 +93,12 @@ class Context:
             except KeyError:
                 obj_sizes[type] = [sz]
 
+            larger = max([dims[0], dims[1]])
+            smaller = min([dims[0], dims[1]])
             try:
-                obj_ratios[type].append(dims[0]/dims[1])
+                obj_ratios[type].append(larger/smaller)
             except KeyError:
-                obj_ratios[type] = [dims[0]/dims[1]]
+                obj_ratios[type] = [larger/smaller]
 
         for type in obj_sizes.keys():
             if len(obj_sizes[type]) == 1:
@@ -122,7 +124,9 @@ class Context:
             sz = 1.0
             for d in dims:
                 sz *= d
-            ratio = dims[0] / dims[1]
+            larger = max([dims[0], dims[1]])
+            smaller = min([dims[0], dims[1]])
+            ratio = larger/smaller
 
             sz_xbar, sz_sd = obj_sizes[type]
             dim_xbar, dim_sd = obj_ratios[type]
